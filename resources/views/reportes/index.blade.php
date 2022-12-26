@@ -6,15 +6,6 @@
 @section('content')
     <div class="container-fluid">
         <div class="card">
-            <div class="card-header p-2">
-             {{-- <ul class="nav nav-pills">
-                <li class="nav-item"><a class="nav-link active" onclick="recarga()"  href="#Roles"  data-toggle="tab"><i class="fas fa-user"></i>&nbsp;&nbsp;Roles</a></li>
-                <li class="nav-item"><a class="nav-link"  onclick="limpiarFormulario()" href="#RolesAgregar" data-toggle="tab"><i class="fas fa-plus"></i>&nbsp;&nbsp;Agregar</a></li>
-                <li class="nav-item"><a class="nav-link"  onclick="recarga()"  href="#RolesEliminados" data-toggle="tab"><i class="far fa-trash-alt"></i>&nbsp;&nbsp;Eliminados</a></li>             
-              </ul>
-              --}}
-            </div> 
-           
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-md-4">
                     <div class="col mb-4">
@@ -57,22 +48,53 @@
                     </div>
                     <div class="col mb-4">
                       <div class="card card-outline card-success">
-                        <div class="card-header text-sm text-left">
-                            <h5 class="card-title">Reporte Ingresos</h5>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                        </div>
+                        <form action="{{route('reporte.caja')}}" method="POST">
+                          @csrf
+                          <div class="card-header text-sm text-left">
+                              <h5 class="card-title">Reporte Caja</h5>
+                              <div class="text-right">
+                                  <button class="btn btn-danger btn-sm"><i class="fas fa-file-pdf"></i> PDF</button>
+                              </div>   
+                          </div>
+                          <div class="card-body">
+                            <label for="id_caja">Seleccione una caja</label>
+                            <select class="select2 select2-hidden-accessible" id="id_caja" name="id_caja[]" multiple="multiple" data-placeholder="Seleccione a las personas vinculadas" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true"> 
+                              @foreach ($cajas as $caja)
+                                <option  value="{{$caja->id}}">{{$caja->nombre}}</option>
+                              @endforeach
+                            </select> 
+                          </div>
+                        </form>
                       </div>
                     </div>
                     <div class="col mb-4">
                       <div class="card card-outline card-success">
-                        <div class="card-header text-sm text-left">
-                            <h5 class="card-title">Reporte Egresos</h5>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
+                        <form action="#" method="POST">
+                          @csrf
+                          <div class="card-header text-sm text-left">
+                              <h5 class="card-title">Reporte Gestion</h5>
+                              <div class="text-right">
+                                  <button class="btn btn-danger btn-sm"><i class="fas fa-file-pdf"></i> PDF</button>
+                              </div>   
+                          </div>
+                          <div class="card-body">
+                            <label for="id_gestion">Seleccione una gestion</label>
+                            <select class="select2 select2-hidden-accessible" id="id_gestion" name="id_gestion[]" multiple="multiple" data-placeholder="Seleccione las gestiones" style="width: 100%;" data-select2-id="8" tabindex="-1" aria-hidden="true"> 
+                              @foreach ($gestiones as $gestion)
+                                @if($gestion->estado==0)
+                                  @php($icono='<span class="badge bg-success">en curso</span>')
+                                @endif
+                                @if($gestion->estado==1)
+                                  @php($icono='<span class="badge bg-danger">finalizado</span>')
+                                @endif
+                                @if($gestion->estado==-1)
+                                  @php($icono='<span class="badge bg-warning">obserbaciones</span>')
+                                @endif
+                                <option  value="{{$gestion->id}}">{{$gestion->nombre}} {{$icono}} </option>
+                              @endforeach
+                            </select> 
+                          </div>
+                        </form>
                       </div>
                     </div>
                     <div class="col mb-4">
@@ -109,5 +131,15 @@
 @section('plugins.Datatables', true)
 @section('plugins.Toastr', true)
 @section('js')
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  })
+</script>
 
 @stop

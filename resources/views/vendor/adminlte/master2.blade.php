@@ -76,63 +76,11 @@
 
 </head>
 
-<body class="@yield('classes_body')" @yield('body_data')>
+<body >
 
     {{-- Body Content --}}
     @yield('body')
     
-        <!-- Modal Eliminados-->
-    <div class="modal fade" id="ModalEliminar" data-backdrop="static">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <input type="hidden" id="id_delete" value="">
-            <div class="modal-header">
-                    <h4 class="modal-title">Eliminar Registro</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-body">
-                    <p>¿Desea Eliminar este registro?</p>
-            </div>
-            <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-                    <a  id="Delete" class="btn btn-danger btn-ok btn-sm">Confirmar</a>
-            </div>
-          </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal Eliminados -->
-      
-    <!-- Modal Restaurar-->
-    <div class="modal fade" id="ModalRestaurar" data-backdrop="static">
-        <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <input type="hidden" id="id_restore" value="">
-            <div class="modal-header">
-                    <h4 class="modal-title">Restaurar Registro</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            <div class="modal-body">
-                    <p>¿Desea Restaurar este registro?</p>
-            </div>
-            <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancelar</button>
-                    <a  id="Restore" class="btn btn-danger btn-ok btn-sm">Confirmar</a>
-            </div>
-        </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal Eliminados -->
-
-    
-
 
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
@@ -163,95 +111,10 @@
             $.fn.dataTable.ext.errMode = 'throw';
         });
         
-       /*$(function() {
-            const languages = {
-               'es': '{{asset('vendor/adminlte/Spanish.json')}}'
-            };
-            $.extend(true, $.fn.dataTable.defaults, {
-                language: {
-                    url: languages['es']
-                },
-            })   
-        });*/
         
     </script>
     
-    <script>
-       /* $(function() {
-            const languages = {
-                //'es': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json'
-               'es': '{{asset('vendor/adminlte/Spanish.json')}}'
-            };
-      
-            $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
-                className: 'btn btn-sm'
-            })
-          
-            $.extend(true, $.fn.dataTable.defaults, {
-               // responsive: true,
-                language: {
-                    url: languages['es']
-                },
-               // pageLength: 10,
-               // aLengthMenu: [ [10,25, 50, 100, 200], [10,25, 50, 100, 200] ],
-                dom: 'lBfrtip',
-                buttons: [
-                    {
-                        extend: 'copy',
-                        className: 'btn-outline-light',
-                        text: 'Copiar',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn-outline-primary',
-                        text: 'CSV',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn-success',
-                        text: 'Excel',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }, 
-                    {
-                        extend: 'pdf',
-                        className: 'btn-danger',
-                        text: 'PDF',
-                        title: 'informe general',
-                        exportOptions: {
-                          columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        className: 'btn-dark',
-                        text: 'Imprimir',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }, 
-                    {
-                        extend: 'colvis',
-                        className: 'btn-dark',
-                        text: 'Visibilidad Columnas',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }
-                ]
-                
-            });
-        
-        });
-        */
-      </script>
+
      
     {{-- Custom Scripts --}}
     @yield('adminlte_js')

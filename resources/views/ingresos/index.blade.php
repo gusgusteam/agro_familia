@@ -58,26 +58,25 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="text-center">
-          <h5  id="exampleModalLabel">Personas Vinculados</h5>
-      </div>
       <div class="container">
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Datos Personales</h3>
+            <h3 class="card-title  w-100 text-center font-weight-bold text-light">Datos Personal</h3>  
           </div>
-          <table id="personas_listas" class="table table-responsive-xl table-bordered table-sm table-hover table-striped">
-              <thead>
-                  <tr>
-                      <th width="5%" >Foto</th>
-                      <th>Nombre</th>
-                      <th>Apellidos</th>
-                      <th>Direccion</th>
-                      <th width="10%">Telefono</th>
-                      <th width="8%">Nro carnet</th>
-                  </tr>
-              </thead>
-          </table>
+          <div class="card-body">
+            <table id="personas_listas" class="table table-responsive-xl table-bordered table-sm table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th width="5%" >Foto</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Direccion</th>
+                        <th width="10%">Telefono</th>
+                        <th width="8%">Nro carnet</th>
+                    </tr>
+                </thead>
+            </table>
+          </div>
         </div>
       </div>
     </div>

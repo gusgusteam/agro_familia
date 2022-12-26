@@ -59,25 +59,28 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="text-center">
-            <h5  id="exampleModalLabel">Empleados vinculados</h5>
+
+        <div class="container">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title  w-100 text-center font-weight-bold text-light">Datos Personal</h3>  
+            </div>
+            <div class="card-body">
+              <table id="personas_listas" class="table table-responsive-xl table-bordered table-sm table-hover table-striped">
+                  <thead>
+                      <tr>
+                          <th width="5%" >Foto</th>
+                          <th>Nombre</th>
+                          <th>Apellidos</th>
+                          <th>Direccion</th>
+                          <th width="10%">Telefono</th>
+                          <th width="8%">Nro carnet</th>
+                      </tr>
+                  </thead>
+              </table>
+            </div>
+          </div>
         </div>
-        <table id="personas_listas" class="table table-responsive-xl table-bordered table-sm table-hover table-striped">
-            <thead>
-                <tr>
-                    <th width="5%" >Foto</th>
-                    <th width="4%"> id </th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                    <th>Nro carnet</th>
-                    <th>Sueldo</th>
-                   {{-- <th width="5%">Acción</th> --}}
-                </tr>
-            </thead>
-            
-        </table>
       </div>
     </div>
 </div>
@@ -136,13 +139,11 @@
         type: "POST",
         columns: [
           {data: 'foto',searchable: false,orderable: false},
-          {data: 'id',orderable: true},
           {data: 'nombre',orderable: false},
           {data: 'apellidos',orderable: false},
           {data: 'direccion',orderable: false},
           {data: 'telefono',orderable: false},
-          {data: 'nro_carnet',searchable: false,orderable: false},
-          {data: 'sueldo',searchable: false,orderable: false}   
+          {data: 'nro_carnet',searchable: false,orderable: false}    
         ],   
       order: [[1, 'desc']],
     });

@@ -98,9 +98,10 @@ class CajaController extends Controller
                    
                      $btn= '<div class="text-right">  <div class="btn-group btn-group-sm ">'
                      .$button_grupo
+                     .$button_grupo4
                      .$button_grupo2
                      .$button_grupo3
-                     .$button_grupo4
+                     
                      .'</div>  </div> ';
                    return  $btn;
                  })

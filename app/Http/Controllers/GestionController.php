@@ -35,7 +35,8 @@ class GestionController extends Controller
                 // anadir nueva columna botones
                  ->addColumn('actions', function($gestion){
                     $url1= route('gestion.gasto',[$gestion->id,'0']);
-                    
+                    $url2= route('reporte.gestion',[$gestion->id,'0']);
+                    $button2= '<a class="btn btn-danger" rel="tooltip" data-placement="top" title="Reporte PDF" href="'.$url2.'" ><i class="fas fa-file-pdf"></i></a>';
                     if($gestion->activo==1){
                         $button='<a class="btn btn-outline-success intermitente" rel="tooltip" data-placement="top" title="Gastos Caja" href="'.$url1.'" ><i class="fas fa-balance-scale-right"></i></a>';
                     }
@@ -45,6 +46,7 @@ class GestionController extends Controller
                     }
                    
                      $btn= '<div class="btn-group btn-group-sm">'
+                     .$button2
                      .$button
                      .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Editar" onclick="Modificar('.$gestion->id.')" ><i class="far fa-edit"></i></a>'
                      .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Eliminar" onclick="Eliminar('.$gestion->id.')"><i class="far fa-trash-alt"></i></a>
@@ -178,13 +180,13 @@ class GestionController extends Controller
     }
 
     public function gastos_gestion($id,$sw)
-    {   if($sw==0){
+    {   if($sw==0){  // cuando la caja tiene gestion
         $gestion = Gestion::findOrFail($id);
         $gestion->activo = -1;
         $gestion->update();
         $caja=Caja::all()->where('id_gestion','=',$id)->first();
         }
-        if($sw==1){
+        if($sw==1){ // cuando la caja es personal o grupal
         $caja=Caja::all()->where('id','=',$id)->first();  
         }
         $nombre_caja=$caja->nombre;

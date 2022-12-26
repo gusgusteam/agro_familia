@@ -130,67 +130,43 @@
   Activo('#example1'); // con que index va iniciar
   Inactivo('#example2');
   ////////
-  function Activo(tabla){
-    $(document).ready(function() {     
-        $(tabla).DataTable({ 
-          destroy: true,
-          retrieve: true,
-          processing: true,
-          serverSide: true,
-          autoWidth: false,
-          responsive: true,
-          ajax: "{{route('rol.DatosServerSideActivo')}}",
-          dataType: 'json',
-          type: "POST",
-          columns: [
-              {
-                data: 'id',
-              },
-              {
-                data: 'name',
-              },
-              {
-                data: 'descripcion',
-              },
-              {
-                data: 'actions',
-                searchable: false,
-                orderable: false,
-              }
-          ],
-        })
+  function Activo(tabla){  
+    $(tabla).DataTable({ 
+      destroy: true,
+      retrieve: true,
+      serverSide: true,
+      autoWidth: false,
+      responsive: true,
+      cache: false,
+      ajax: "{{route('rol.DatosServerSideActivo')}}",
+      dataType: 'json',
+      type: "POST",
+      columns: [
+        {data: 'id',searchable: false, orderable: false},
+        {data: 'name'},
+        {data: 'descripcion'},
+        {data: 'actions',searchable: false, orderable: false}
+      ],
     })
   }
   /////////
-  function Inactivo(tabla){
-    $(document).ready(function() {     
-        $(tabla).DataTable({ 
-          destroy: true,
-          retrieve: true,
-          processing: true,
-          serverSide: true,
-          autoWidth: false,
-          responsive: true,
-          ajax: "{{route('rol.DatosServerSideInactivo')}}",
-          dataType: 'json',
-          type: "POST",
-          columns: [
-              {
-                data: 'id',
-              },
-              {
-                data: 'name',
-              },
-              {
-                data: 'descripcion',
-              },
-              {
-                data: 'actions',
-                searchable: false,
-                orderable: false,
-              }
-          ],
-        })
+  function Inactivo(tabla){   
+    $(tabla).DataTable({ 
+      destroy: true,
+      retrieve: true,
+      serverSide: true,
+      autoWidth: false,
+      responsive: true,
+      cache: false,
+      ajax: "{{route('rol.DatosServerSideInactivo')}}",
+      dataType: 'json',
+      type: "POST",
+      columns: [
+        {data: 'id'},
+        {data: 'name'},
+        {data: 'descripcion'},
+        {data: 'actions',searchable: false, orderable: false}
+      ],
     })
   }
   /////////

@@ -64,6 +64,9 @@ Route::controller(ReporteController::class)->group(function (){
     Route::get('reporte','index')->name('reporte.index');
     Route::post('reporte/usuario','pdf_usuario')->name('reporte.usuario');
     Route::post('reporte/rol','pdf_rol')->name('reporte.rol');
+    Route::post('reporte/caja','prueba')->name('reporte.caja');
+    Route::post('reporte/egreso','prueba2')->name('reporte.egreso');
+    Route::get('retorte/gestion/{id}/{sw}','reporte_pdf')->name('reporte.gestion');  
  
 });
 

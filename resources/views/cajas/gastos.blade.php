@@ -4,7 +4,6 @@
 
 @section('content_header')
     <h1>Ingresos y Egresos</h1>
-    {{--<h1>{{$id_caja}}</h1>--}}
 @stop
 
 @section('content')
@@ -41,17 +40,6 @@
                     </div>
                   </div>
                 </div>
-                {{--
-                <div class="col-md-6">  
-                    <div class="text-center">
-                        
-                        
-                        <input type="button" class="btn btn-lg btn-default" id="monto_ajax" name="monto_ajax">
-                        <input type="button" class="btn btn-lg btn-primary" id="monto_egreso" name="monto_egreso">
-                       
-                    </div> 
-                </div> 
-                --}}
             </div>
         </div>
         
@@ -62,9 +50,9 @@
                   <button id="btn_ingreso" name="btn_ingreso" class="btn btn-success"><i class="fas fa-plus"> ingreso</i></button>
                 </div>
               </div>
-              <div class="card">
+              <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title"><span class="badge bg-primary">Ingresos</span></h3>    
+                  <h3 class="card-title  w-100 text-center font-weight-bold text-light">INGRESOS</h3>    
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -88,9 +76,9 @@
                     <button id="btn_egreso" name="btn_egreso" class="btn btn-success"><i class="fas fa-plus"> egreso</i></button>
                   </div>
                 </div>
-                <div class="card">
+                <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title"> <span class="badge bg-primary">Egresos</span></h3>
+                    <h3 class="card-title  w-100 text-center font-weight-bold text-light">EGRESOS</h3>  
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -464,18 +452,18 @@
         url:"{{asset('')}}"+"caja/monto/"+{{$id_caja}} , dataType:'json', // id de la caja {{$id_caja}}
         success: function(resultado){
 
-         $('#monto_ingreso').empty();
-         $('#monto_egreso').empty();
-         $('#monto_ajax').empty();
-         var text = document.createTextNode(resultado.monto_ingreso);
-         document.getElementById("monto_ingreso").appendChild(text);
-         var text1 = document.createTextNode(resultado.monto_egreso);
-         document.getElementById("monto_egreso").appendChild(text1);
-         var text2 = document.createTextNode(resultado.monto);
-         document.getElementById("monto_ajax").appendChild(text2);
-        // $("#monto_ajax").val(resultado.monto);  
-        // $("#monto_ingreso").val(resultado.monto_ingreso); 
-        // $("#monto_egreso").val(resultado.monto_egreso);  
+          $('#monto_ingreso').empty();
+          $('#monto_egreso').empty();
+          $('#monto_ajax').empty();
+          var ingreso= resultado.monto_ingreso + " bs";
+          var egreso= resultado.monto_egreso + " bs";
+          var monto= resultado.monto + " bs";
+          var text = document.createTextNode(ingreso);     
+          document.getElementById("monto_ingreso").appendChild(text);
+          var text1 = document.createTextNode(egreso);
+          document.getElementById("monto_egreso").appendChild(text1);
+          var text2 = document.createTextNode(monto);
+          document.getElementById("monto_ajax").appendChild(text2);
 
         }
     });  
@@ -578,5 +566,11 @@
   $("#img_perfil2").change(function () {
       readImage2(this);
   });
+</script>
+
+<script type="text/javascript"> 
+function pdf(){
+  window.addEventListener("load", window.print());
+}
 </script>
 @stop

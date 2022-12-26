@@ -246,6 +246,7 @@
 
 <script> 
 
+  
   Activo('#example1') // con que index va iniciar
   Inactivo('#example2')
   

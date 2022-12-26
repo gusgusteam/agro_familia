@@ -182,6 +182,7 @@ return [
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
+   // 'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
@@ -193,6 +194,7 @@ return [
     'right_sidebar_theme' => 'dark',
     'right_sidebar_slide' => true,
     'right_sidebar_push' => true,
+    //'right_sidebar_scrollbar_theme' => 'os-theme-light',
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
     'right_sidebar_scrollbar_auto_hide' => 'l',
 
@@ -279,12 +281,12 @@ return [
             'label_color' => 'success',
             'submenu' => [
                 [
-                    'text' => 'Egresos',
+                    'text' => 'EGRESOS',
                     'route'  => 'egreso.index',
                     'icon' => 'far fa-building',
                 ],
                 [
-                    'text' => 'Ingresos',
+                    'text' => 'INGRESOS',
                     'route'  => 'ingreso.index',
                     'icon' => 'far fa-building',
                 ],
@@ -373,19 +375,20 @@ return [
                     'asset' => true,
                     'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
                 ],
-                /* archivos pdf y excel
-                
                
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js',
-                ],
+                
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js',
                 ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js',
+                ],
+                
+                 /* archivos pdf y excel
                 [
                     'type' => 'js',
                     'asset' => true,
