@@ -357,8 +357,10 @@ class ReporteController extends Controller
    
     public function reporte_pdf($id , $sw)
     {
+        $nombre_gestion="";
         if($sw==0){  // cuando la caja tiene gestion
             $caja=Caja::all()->where('id_gestion','=',$id)->first();
+            
         }
         if($sw==1){ // cuando la caja es personal o grupal
         $caja=Caja::all()->where('id','=',$id)->first();  
@@ -366,6 +368,8 @@ class ReporteController extends Controller
         $nombre_caja=$caja->nombre;
         $id_caja=$caja->id;
         $monto_total=$caja->monto_total;
+
+        
         return view('reportes/pdf_gastos',compact('nombre_caja','id_caja','monto_total'));
 
     }

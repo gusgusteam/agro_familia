@@ -62,6 +62,7 @@
                         <th>Descripcion</th>
                         <th>Fecha Inicial</th>
                         <th>Fecha Final</th>
+                        <th>Estado</th>
                         <th width="5%">Acción</th>
                       </tr>
                     </thead>  
@@ -198,30 +199,14 @@
           dataType: 'json',
           type: "POST",
           columns: [
-              {
-                data: 'id',
-              },
-              {
-                data: 'nombre',
-              },
-              {
-                data: 'descripcion',
-              },
-              {
-                data: 'fecha_inicial',
-              },
-              {
-                data: 'fecha_final',
-              },
-              {
-                data: 'estado',
-              },
-              {
-                data: 'actions',
-                searchable: false,
-                orderable: false,
-              }
-          ],
+              {data: 'id',searchable: false,orderable: false},
+              {data: 'nombre',orderable: false},
+              {data: 'descripcion',orderable: false},
+              {data: 'fecha_inicial'},
+              {data: 'fecha_final'},
+              {data: 'estado'},
+              {data: 'actions',searchable: false,orderable: false}
+          ]
         })
     })
   }
@@ -239,27 +224,14 @@
           dataType: 'json',
           type: "POST",
           columns: [
-              {
-                data: 'id',
-              },
-              {
-                data: 'nombre',
-              },
-              {
-                data: 'descripcion',
-              },
-              {
-                data: 'fecha_inicial',
-              },
-              {
-                data: 'fecha_final',
-              },
-              {
-                data: 'actions',
-                searchable: false,
-                orderable: false,
-              }
-          ],
+            {data: 'id',searchable: false,orderable: false},
+            {data: 'nombre',orderable: false},
+            {data: 'descripcion',orderable: false},
+            {data: 'fecha_inicial'},
+            {data: 'fecha_final'},
+            {data: 'estado'},
+            {data: 'actions',searchable: false,orderable: false}
+          ]
         })
     })
   }
@@ -360,11 +332,15 @@
           cache: false,
           async: false,
           success:function(resultado){
-            toastr.success('El registro fue eliminado correctamente.', 'Eliminar Registro', {timeOut:3000})           
+            if(resultado.error==1){
+              toastr.error(resultado.mensaje, 'Eliminar Registro', {timeOut:3000});
+            }else{
+              recarga();
+              toastr.success('El registro fue eliminado correctamente.', 'Eliminar Registro', {timeOut:3000});
+            }  
+            $('#ModalEliminar').modal('hide'); // salir modal        
           }
       })
-    $('#ModalEliminar').modal('hide'); // salir modal
-    recarga();
   });
   //
 

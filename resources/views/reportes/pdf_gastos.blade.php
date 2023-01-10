@@ -9,13 +9,25 @@
     {{--<a id="prueba2" name="prueba2" class="btn btn-danger" onclick="pdf()">imprimir pdf</a>--}}
   </div>
 
+  
+
 <div class="container">
-      <div class="text-left">
-        <span> <strong>remitente :</strong> {{Auth::user()->name .' '.Auth::user()->apellidos}}</span> <br>
-        <span> <strong>direccion :</strong>  san jose del norte</span> <br>
-        <span> <strong>fecha y hora :</strong> {{date('y-n-d h:i:s ')}}</span> <br>
-        <span> <strong>gestion :</strong>  1-2019 verano</span> <br>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="text-left">
+            <span> <strong>remitente :</strong> {{Auth::user()->name .' '.Auth::user()->apellidos}}</span> <br>
+            <span> <strong>direccion :</strong>  san jose del norte</span> <br>
+            <span> <strong>fecha y hora :</strong> {{date('y-n-d h:i:s ')}}</span> <br>
+            <span> <strong>gestion :</strong>  1-2019 verano</span> <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="text-right">
+            <img class="img-fluid"  src="{{asset('vendor/adminlte/dist/img/Logo.png')}}">
+          </div>
+        </div>
       </div>
+      
       <div class="mb-3">
           <div class="text-center"><h3>{{$nombre_caja}}</h3></div>  
       </div> 

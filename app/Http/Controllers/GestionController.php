@@ -92,7 +92,21 @@ class GestionController extends Controller
                    return  $btn;
                  })
                 // 
-                 ->rawColumns(['actions']) // incorporar columnas
+                ->addColumn('estado', function($gestion){
+                    $span='';
+                    if($gestion->estado==0){
+                        $span= '<span class="badge bg-success">en curso</span>';
+                    }
+                    if($gestion->estado==1){
+                        $span= '<span class="badge bg-danger">finalizado</span>';
+                    }
+                    if($gestion->estado==-1){
+                        $span= '<span class="badge bg-warning">obserbaciones</span>';
+                    }
+        
+                  return  $span;
+                })
+                 ->rawColumns(['actions','estado']) // incorporar columnas
                  ->make(true); // convertir a codigo
         }
     }
@@ -160,11 +174,16 @@ class GestionController extends Controller
     {
         $gestion = Gestion::findOrFail($id);
         $caja = Caja::all()->where('id_gestion','=',$gestion->id)->first();
-        $caja->activo=0;
-        $caja->update();
-        $gestion->activo = 0;
-        $gestion->update();
-        
+        if ($gestion->estado!=0){
+            $caja->activo=0;
+            $caja->update();
+            $gestion->activo = 0;
+            $gestion->update();
+        }else{
+           return $data=['error'=>1,'mensaje'=>'no puede eliminar una gestion si sigue en curso']; 
+        }
+
+        return $data=['error'=>0,'mensaje'=>'']; 
     }
 
     public function restore($id)

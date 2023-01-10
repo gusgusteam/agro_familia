@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Agro </b> CB ',
+    'logo' => '<b>Agro </b> AISA ',
     'logo_img' => 'vendor/adminlte/dist/img/Logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -131,7 +131,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-primary', // canviamos el backgroup
+    'usermenu_header_class' => 'bg-light', // canviamos el backgroup
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => false,  // false
@@ -154,12 +154,12 @@ return [
 
 
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-success',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-success',
 
 
     'classes_body' => '',
@@ -178,9 +178,9 @@ return [
 
    // 'sidebar_mini' => 'lg',
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
-    'sidebar_collapse_remember' => false,
+    'sidebar_collapse_remember' => true,
     'sidebar_collapse_remember_no_transition' => true,
    // 'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_theme' => 'os-theme-light',
@@ -238,7 +238,6 @@ return [
                 'period' => 30,                       // The update period for get new data (in seconds, optional).
             ],
         ],
-       
         [
             'type'         => 'navbar-notification',
             'id'           => 'my-notification',
@@ -274,6 +273,25 @@ return [
         
         ['header' => 'PANEL'],
         [
+            'text'        => 'INVENTARIO',
+           // 'url'         => '#',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text' => 'PRODUCTOS',
+                    'route'  => 'egreso.index',
+                    'icon' => 'fas fa-dollar-sign',
+                ],
+                [
+                    'text' => 'PROVEEDOR',
+                    'route'  => 'proveedor.index',
+                    'icon' => 'fas fa-dollar-sign',
+                ],
+            ],
+        ],
+        [
             'text'        => 'CUENTAS',
            // 'url'         => '#',
             'icon'        => 'far fa-fw fa-file',
@@ -283,12 +301,12 @@ return [
                 [
                     'text' => 'EGRESOS',
                     'route'  => 'egreso.index',
-                    'icon' => 'far fa-building',
+                    'icon' => 'fas fa-dollar-sign',
                 ],
                 [
                     'text' => 'INGRESOS',
                     'route'  => 'ingreso.index',
-                    'icon' => 'far fa-building',
+                    'icon' => 'fas fa-dollar-sign',
                 ],
             ],
         ],
@@ -369,6 +387,12 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
+                ],
+               
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/jquery.validate.min.js',
                 ],
                 [
                     'type' => 'js',

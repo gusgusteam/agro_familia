@@ -6,6 +6,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SocioController;
 use App\Http\Controllers\GestionController;
 use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -116,12 +117,20 @@ Route::controller(EmpleadoController::class)->group(function (){
     Route::get('empleado/restore/{id}','restore')->name('empleado.restore');
     Route::get('empleado/DatosServerSideActivo','DatosServerSideActivo')->name('empleado.DatosServerSideActivo'); //activos
     Route::get('empleado/DatosServerSideInactivo','DatosServerSideInactivo')->name('empleado.DatosServerSideInactivo'); //eliminados
-   // Route::get('empleado/perfil','perfil')->name('usuario.perfil');
     Route::get('empleado/buscar/{id}','buscarPorEmpleado')->name('empleado.buscar');
-  // Route::post('empleado/update_perfil','update_perfil')->name('usuario.update_perfil');
-  // Route::post('empleado/update_password','update_password')->name('usuario.update_password'); 
     Route::post('empleado/store','store')->name('empleado.store');
     Route::post('empleado/update/{id}','update')->name('empleado.update');  
+});
+
+Route::controller(ProveedorController::class)->group(function (){
+    Route::get('proveedor','index')->name('proveedor.index');
+    Route::get('proveedor/destroy/{id}','destroy')->name('proveedor.destroy');
+    Route::get('proveedor/restore/{id}','restore')->name('proveedor.restore');
+    Route::get('proveedor/DatosServerSideActivo','DatosServerSideActivo')->name('proveedor.DatosServerSideActivo'); //activos
+    Route::get('proveedor/DatosServerSideInactivo','DatosServerSideInactivo')->name('proveedor.DatosServerSideInactivo'); //eliminados
+    Route::get('proveedor/buscar/{id}','buscarPorEmpleado')->name('proveedor.buscar');
+   Route::post('proveedor/store','store')->name('proveedor.store');
+   Route::post('proveedor/update/{id}','update')->name('proveedor.update');  
 });
 
 Route::controller(EgresoController::class)->group(function (){
