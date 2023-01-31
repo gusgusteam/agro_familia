@@ -252,6 +252,33 @@
         });
         */
       </script>
+      <script type="text/javascript">
+        function readImage (input) {
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            }
+        }
+        ///
+        $("#img_foto").change(function () {
+            readImage(this);
+        });
+        //
+        function Imagen(image){
+            Swal.fire({
+            title: '',
+            text: '',
+            imageUrl: image,
+            imageWidth: 400,
+            imageHeight: 400,
+            imageAlt: 'Custom image',
+            }) 
+        }
+
+      </script>
      
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
@@ -289,7 +316,7 @@
     @if (!$errors->any())
         <script>
             function limpiarFormulario() {
-            document.getElementById("miform").reset();
+                document.getElementById("miform").reset(); 
             }
         </script>
     @endif

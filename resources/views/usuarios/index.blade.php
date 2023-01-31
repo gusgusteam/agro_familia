@@ -492,5 +492,5 @@
         readImage(this);
     });
 </script>
-w
+
 @stop

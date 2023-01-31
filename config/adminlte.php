@@ -165,13 +165,14 @@ return [
     'classes_body' => '',
     'classes_brand' => '',
     'classes_brand_text' => '',
+   // 'classes_content_wrapper' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
     //'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-white navbar-light ',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -281,7 +282,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'PRODUCTOS',
-                    'route'  => 'egreso.index',
+                    'route'  => 'producto.index',
                     'icon' => 'fas fa-dollar-sign',
                 ],
                 [
@@ -461,16 +462,32 @@ return [
         'Select2' => [
             'active' => true,
             'files' => [
-                
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/select2/css/select2.css',
+                ],
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/select2/js/select2.min.js',
                 ],
                 [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/select2/js/select2.full.min.js',
+                ],
+               
+                [
                     'type' => 'css',
                     'asset' => true,
-                    'location' => 'vendor/select2/css/select2.css',
+                    'location' => 'vendor/bootstrap4-duallistbox/bootstrap-duallistbox.min.css',
+                ],
+                
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js',
                 ],
                 
             ],

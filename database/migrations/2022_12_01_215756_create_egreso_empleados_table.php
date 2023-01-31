@@ -15,6 +15,7 @@ class CreateEgresoEmpleadosTable extends Migration
     {
         Schema::create('egreso_empleados', function (Blueprint $table) {
             $table->id();
+            $table->integer('monto')->default(0);
             $table->foreignId('id_egreso')->nullable()->constrained('egresos')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('id_empleado')->nullable()->constrained('empleados')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();

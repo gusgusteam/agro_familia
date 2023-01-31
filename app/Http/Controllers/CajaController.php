@@ -418,6 +418,7 @@ class CajaController extends Controller
 
     public function egreso_add(Request $request)
     {// id de la caja para relacionar
+        
         $validator = Validator::make($request->all(), [
             'descripcionM' => 'required',
             'montoM' => 'required|numeric|min:0',
@@ -458,13 +459,16 @@ class CajaController extends Controller
                 }
                 // empleados
                 $empleados_marcados=collect($request->id_empleados);
+                
                 $n=count($empleados_marcados);
                 if($n != 0){
                     $i=0;
                     while ($i<$n) {
                         $egreso_empleado=new egreso_empleado();
                         $egreso_empleado->id_egreso=$egreso->id;
+                       // $array=$request->input('id_empleados');
                         $egreso_empleado->id_empleado=$empleados_marcados[$i];
+                       // $egreso_empleado->monto=$empleados_marcados[$i]['sueldo'];
                         $egreso_empleado->save();
                         $i=$i+1;
                     }

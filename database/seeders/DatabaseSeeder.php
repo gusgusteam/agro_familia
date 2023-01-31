@@ -7,7 +7,11 @@ use App\Models\Egreso;
 use App\Models\Empleado;
 use App\Models\Gestion;
 use App\Models\Ingreso;
+use App\Models\Pempresa;
+use App\Models\Ppersona;
+use App\Models\Proveedor;
 use App\Models\Tipo;
+use App\Models\Tipo_Producto;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -170,8 +174,101 @@ class DatabaseSeeder extends Seeder
             'sueldo'=>2110
         ]);
 
+        Empleado::create([
+            'nombre'=>'enrique',
+            'apellidos'=>'condori',
+            'telefono'=>71619345,
+            'nro_carnet'=>8879285,
+            'direccion'=>'montero-santa cruz',
+            'sueldo'=>5000
+        ]);
+        Empleado::create([
+            'nombre'=>'paniagua',
+            'apellidos'=>'anagua',
+            'telefono'=>828372,
+            'nro_carnet'=>876255,
+            'direccion'=>'montero',
+            'sueldo'=>3900
+        ]);
 
-        User::factory(1000)->create();
+        $Proveedor1=Proveedor::create([
+            'direccion' => 'montero-san jose',
+            'correo' => 'montero@gmail.com',
+            'telefono' => 8272221,
+            'tipo'=>2
+        ]);
+        Pempresa::create([
+            'razon_social'=>'BIOSET',
+            'id_proveedor'=>$Proveedor1->id
+        ]);
+        $Proveedor2=Proveedor::create([
+            'direccion' => 'SANTA CRUZ-plaza principal',
+            'correo' => 'santacruz@gmail.com',
+            'telefono' => 9817262,
+            'tipo'=>2
+        ]);
+        Pempresa::create([
+            'razon_social'=>'triple AAA',
+            'id_proveedor'=>$Proveedor2->id
+        ]);
+        $Proveedor3=Proveedor::create([
+            'direccion' => 'WARNES-mERCADO',
+            'correo' => 'warnes@gmail.com',
+            'telefono' => 827261,
+            'tipo'=>2
+        ]);
+        Pempresa::create([
+            'razon_social'=>'Impro Full',
+            'id_proveedor'=>$Proveedor3->id
+        ]);
+        $Proveedor4=Proveedor::create([
+            'direccion' => 'San jose del norte',
+            'correo' => 'lucasgustavocarvajalbarrios@gmail.com',
+            'telefono' => 71619345,
+            'tipo'=>1
+        ]);
+        Ppersona::create([
+            'nombre'=>'lucas',
+            'paterno'=>'carvajal',
+            'materno'=>'barrios',
+            'id_proveedor'=>$Proveedor4->id
+        ]);
+        $Proveedor5=Proveedor::create([
+            'direccion' => 'San jose del norte',
+            'correo' => 'eva@gmail.com',
+            'telefono' => 9181722,
+            'tipo'=>1
+        ]);
+        Ppersona::create([
+            'nombre'=>'eva luz',
+            'paterno'=>'salazar',
+            'materno'=>'prado',
+            'id_proveedor'=>$Proveedor5->id
+        ]);
+
+        Tipo_Producto::create([
+            'nombre'=>'Herbisida'
+        ]);
+        Tipo_Producto::create([
+            'nombre'=>'Fungisida'
+        ]);
+        Tipo_Producto::create([
+            'nombre'=>'Insectisida'
+        ]);
+        Tipo_Producto::create([
+            'nombre'=>'Fertilizante Flor'
+        ]);
+        Tipo_Producto::create([
+            'nombre'=>'Fertilizante llenado'
+        ]);
+        Tipo_Producto::create([
+            'nombre'=>'Fertilizante tallo'
+        ]);
+        Tipo_Producto::create([
+            'nombre'=>'Hormona'
+        ]);
+
+        User::factory(100)->create();
 
     }
 }

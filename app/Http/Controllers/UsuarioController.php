@@ -134,8 +134,7 @@ class UsuarioController extends Controller
             $imagen = $request->file("img_perfil"); //almacenar imagen en variable
             $nombreimagen=Str::slug($usuario->id).".".$imagen->guessExtension();//insertar parametro del nombre de imagen
             $ruta = public_path("imagenes/usuarios/");//guardar en esa ruta
-            $imagen->move($ruta,$nombreimagen); //mover la imagen es esa ruta y con ese nombre
-            
+            $imagen->move($ruta,$nombreimagen); //mover la imagen es esa ruta y con ese nombre      
         }
         return $request;     
     }

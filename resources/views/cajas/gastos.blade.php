@@ -43,6 +43,7 @@
             </div>
         </div>
         
+        
         <div class="row">
             <div class="col-md-6">
               <div class="text-center">
@@ -100,7 +101,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="ModalEgreso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalEgreso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true" >
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header border-bottom-0">
@@ -116,11 +117,11 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <div class="input-group mb-3">
-                      <label for="id_empleados">Registro de persona  </label>
-                      <select class="select2 select2-hidden-accessible" id="id_empleados" name="id_empleados[]" multiple="multiple" data-placeholder="Seleccione a las personas vinculadas" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true"> 
-                        <option value="">nuevo</option>
-                      </select> 
-                    </div> 
+                      <label for="id_empleados_aux">Registro de persona </label>
+                        <select class="select2 select2-hidden-accessible" id="id_empleados" name="id_empleados[]" multiple="multiple" data-placeholder="Seleccione a las personas vinculadas" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true"> 
+                        
+                        </select> 
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -251,7 +252,6 @@
             </div>
         </div>
   
-
 @stop
 
 @section('css')
@@ -318,6 +318,7 @@
             resultado.empleado.forEach(function(elemento, indice, array) {
                   $('#id_empleados').append($('<option  />', {
                   text: elemento.nombre + ' ' + elemento.apellidos + ' CI: ' + elemento.nro_carnet,
+                 // value: [elemento.id,elemento.sueldo],
                   value: elemento.id,
                   }));
             
@@ -355,11 +356,9 @@
   // selector dinamico con array
   $(function () {
       //Initialize Select2 Elements
-      $('.select2').select2()
-      //Initialize Select2 Elements
-      $('.select2bs4').select2({
-        theme: 'bootstrap4'
-      })
+       $('.select2').select2()
+      //$('#grado_academico').select2()
+      //Initialize Select2 Elements 
   })
 
   $(document).ready(function() { 
@@ -567,6 +566,105 @@
       readImage2(this);
   });
 </script>
+
+<script>
+  $(document).ready(function () {
+      $('#id_empleados_aux').change(function (e) {
+        if ($(this).val()!=null) {
+          llamarempleado($(this).val());
+          $('#modal-lg').modal('show');
+          //$('#miinput').prop("disabled", false);
+          //$('#miinput').val($(this).val());
+        }
+      })
+
+      $('#id_empleados').change(function (e) {
+        
+          
+          $('#miinput').val($(this).val());
+         
+       
+      })
+  });
+
+  function llamarempleado(id){
+    $.ajax({ 
+        url:"{{asset('')}}"+"empleado/buscar/"+id , dataType:'json', 
+        success: function(resultado){
+          $('#nombre_modal_sm').empty();
+          $('#modal_id_empleado').val(id);
+          var nombre= resultado.nombre +" "+ resultado.apellidos + " CI: "+resultado.nro_carnet;
+          var text = document.createTextNode(nombre);     
+          document.getElementById("nombre_modal_sm").appendChild(text);
+        }
+    });  
+  }
+
+  function cargar_select2(id,monto){
+    
+      $.ajax({ 
+        url:"{{asset('')}}"+"empleado/buscar/"+id , dataType:'json',
+          success: function(resultado){
+            ////////////colocar el array al selectd ////////////////////
+           // $('#id_empleados').empty(); // limpiar antes de sobreescribir
+                $('#id_empleados').append($('<option   />', {
+                  text: resultado.nombre + ' ' + resultado.apellidos + ' CI: ' + resultado.nro_carnet,
+                  value: [resultado.id,monto],
+                  selected: true,
+                  disabled: true
+                }));
+          }
+        });      
+  }
+
+
+</script>
+
+<script type="text/javascript">
+
+
+$('#sel1').on('change', function (e) {
+    e.preventDefault();
+    var selVal = $(this).val();
+    var selHtml = $(this).find('option:selected').text();
+    moveItem('#sel1', '#sel2', selVal, selHtml);//call our function
+});
+//On change of the second select
+$('#sel2').on('change', function (e) {
+    e.preventDefault();
+    var selVal = $(this).val();
+    var selHtml = $(this).find('option:selected').text();
+    moveItem('#sel2', '#sel1', selVal, selHtml);//call our function
+});
+
+
+//Move function take 4 parameters
+function moveItem(moveFrom, moveTo, selVal, selHtml) {
+    if (confirm("Are you sure? : " + selVal)) {//Confirm dialogue box comes up and on selecting 'ok' this part will be executed
+    var mId = moveFrom + ' option[value="' + selVal + '"]';
+    $(mId).remove();//remove value from the other select    
+   // $(moveTo).append('<option value="' + selVal + '">' + selHtml + '</option>');//append a value to select
+    $('#id_empleados').append($('<option   />', {
+      text: selHtml,
+      value: [selVal,176],
+      selected: true
+    }));
+    }
+    return false;
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript"> 
 function pdf(){

@@ -6,6 +6,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\SocioController;
 use App\Http\Controllers\GestionController;
 use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
@@ -124,13 +125,24 @@ Route::controller(EmpleadoController::class)->group(function (){
 
 Route::controller(ProveedorController::class)->group(function (){
     Route::get('proveedor','index')->name('proveedor.index');
-    Route::get('proveedor/destroy/{id}','destroy')->name('proveedor.destroy');
-    Route::get('proveedor/restore/{id}','restore')->name('proveedor.restore');
+    Route::get('proveedor/destroy/{proveedor}','destroy')->name('proveedor.destroy');
+    Route::get('proveedor/restore/{proveedor}','restore')->name('proveedor.restore');
     Route::get('proveedor/DatosServerSideActivo','DatosServerSideActivo')->name('proveedor.DatosServerSideActivo'); //activos
     Route::get('proveedor/DatosServerSideInactivo','DatosServerSideInactivo')->name('proveedor.DatosServerSideInactivo'); //eliminados
-    Route::get('proveedor/buscar/{id}','buscarPorEmpleado')->name('proveedor.buscar');
+    Route::get('proveedor/buscar/{id}','buscar')->name('proveedor.buscar');
    Route::post('proveedor/store','store')->name('proveedor.store');
-   Route::post('proveedor/update/{id}','update')->name('proveedor.update');  
+   Route::post('proveedor/update/{proveedor}','update')->name('proveedor.update');  
+});
+Route::controller(ProductoController::class)->group(function (){
+    Route::get('producto','index')->name('producto.index');
+    Route::get('producto/destroy/{producto}','destroy')->name('producto.destroy');
+    Route::get('producto/restore/{producto}','restore')->name('producto.restore');
+    Route::get('producto/DatosServerSideActivo','DatosServerSideActivo')->name('producto.DatosServerSideActivo'); //activos
+    Route::get('producto/DatosServerSideInactivo','DatosServerSideInactivo')->name('producto.DatosServerSideInactivo'); //eliminados
+    Route::get('producto/buscar/{producto}','buscar')->name('producto.buscar');
+    Route::get('producto/extra','extra')->name('producto.extra');
+   Route::post('producto/store','store')->name('producto.store');
+   Route::post('producto/update/{producto}','update')->name('producto.update');  
 });
 
 Route::controller(EgresoController::class)->group(function (){
