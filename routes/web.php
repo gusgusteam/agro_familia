@@ -13,7 +13,7 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UsuarioController;
-
+use App\Models\Tipo_Producto;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ use App\Http\Controllers\UsuarioController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   return redirect()->to(route('login'));
 });
 
 Auth::routes();
@@ -141,8 +141,10 @@ Route::controller(ProductoController::class)->group(function (){
     Route::get('producto/DatosServerSideInactivo','DatosServerSideInactivo')->name('producto.DatosServerSideInactivo'); //eliminados
     Route::get('producto/buscar/{producto}','buscar')->name('producto.buscar');
     Route::get('producto/extra','extra')->name('producto.extra');
+    Route::get('producto/catalogo','catalogo')->name('producto.catalogo');
    Route::post('producto/store','store')->name('producto.store');
-   Route::post('producto/update/{producto}','update')->name('producto.update');  
+   Route::post('producto/update/{producto}','update')->name('producto.update');
+
 });
 
 Route::controller(EgresoController::class)->group(function (){

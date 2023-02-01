@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $productos= Producto::all()->where('activo','=',1);
+        $cant_productos=count($productos);
+        return view('home',compact('cant_productos'));
     }
     public function perfil()
     {

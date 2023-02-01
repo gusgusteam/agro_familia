@@ -9,6 +9,7 @@ use App\Models\Gestion;
 use App\Models\Ingreso;
 use App\Models\Pempresa;
 use App\Models\Ppersona;
+use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\Tipo;
 use App\Models\Tipo_Producto;
@@ -267,6 +268,65 @@ class DatabaseSeeder extends Seeder
         Tipo_Producto::create([
             'nombre'=>'Hormona'
         ]);
+
+        Producto::create([
+            'nombre' => 'amina 720 24D',
+            'descripcion' => 'matar hoja oja ancha',
+            'origen' => 'Boliviano',
+            'precio_compra'=>'3.67',
+            'precio_venta' => '4.10',
+            'stock' =>0,
+            'stock_minimo'=>0,
+            'id_tipo_producto'=>1,
+            'id_proveedor'=>1
+        ]);
+        Producto::create([
+            'nombre' => 'Arrow',
+            'descripcion' => 'matar malesas',
+            'origen' => 'Boliviano',
+            'precio_compra'=>'10.27',
+            'precio_venta' => '11.90',
+            'stock' =>0,
+            'stock_minimo'=>0,
+            'id_tipo_producto'=>2,
+            'id_proveedor'=>1
+        ]);
+        Producto::create([
+            'nombre' => 'Golden',
+            'descripcion' => 'contrala enfermedades',
+            'origen' => 'Boliviano',
+            'precio_compra'=>'39.10',
+            'precio_venta' => '45.00',
+            'stock' =>0,
+            'stock_minimo'=>0,
+            'id_tipo_producto'=>3,
+            'id_proveedor'=>2
+        ]);
+        Producto::create([
+            'nombre' => 'Cloranta',
+            'descripcion' => 'contrala malesas',
+            'origen' => 'Boliviano',
+            'precio_compra'=>'30.90',
+            'precio_venta' => '34.10',
+            'stock' =>0,
+            'stock_minimo'=>0,
+            'id_tipo_producto'=>2,
+            'id_proveedor'=>1
+        ]);
+        Producto::create([
+            'nombre' => 'Tandem',
+            'descripcion' => 'control de enfermedades extremas',
+            'origen' => 'Brazilero',
+            'precio_compra'=>'45.60',
+            'precio_venta' => '50.43',
+            'stock' =>0,
+            'stock_minimo'=>0,
+            'id_tipo_producto'=>2,
+            'id_proveedor'=>4
+        ]);
+
+
+
 
         User::factory(100)->create();
 

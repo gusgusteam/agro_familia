@@ -18,7 +18,7 @@ class ProductoController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         return view('productos/index');
@@ -59,7 +59,7 @@ class ProductoController extends Controller
                   return  $span;
                  })
                  ->addColumn('foto', function($producto){
-                    $imagen='imagenes/productos/'.$producto->id.'.jpg'; 
+                    $imagen='imagenes/productos/'.$producto->id.'.png'; 
                     if (!file_exists($imagen)) { // existe la imagen con el nombre del id empleado
                      $imagen = "imagenes/productos/150x150.png";
                     }
@@ -150,10 +150,10 @@ class ProductoController extends Controller
 
     public function buscar(Producto $producto)
     {
-        $imagen='imagenes/productos/'.$producto->id.'.jpg'; 
-       // if (!file_exists($imagen)) { // existe la imagen con el nombre del id empleado
-       //     $imagen = "imagenes/productos/150x150.png";
-       // }
+        $imagen='imagenes/productos/'.$producto->id.'.png'; 
+        if (!file_exists($imagen)) { // existe la imagen con el nombre del id empleado
+            $imagen = "imagenes/productos/150x150.png";
+        }
         $url_foto=asset($imagen.'?'.time());
         $datos=['producto'=>$producto,'url_foto'=>$url_foto];
         return json_encode($datos);
@@ -161,9 +161,17 @@ class ProductoController extends Controller
 
 
 
-    public function edit(Producto $producto)
+    public function catalogo()
     {
-        //
+        $productos=Tipo_Producto::select(
+            'productos.*',
+            'tipo__productos.nombre as nombre_tipo'
+        )
+        ->join('productos','productos.id_tipo_producto','=','tipo__productos.id')
+        ->where('productos.activo','=',1)
+        ->get();
+        
+        return view('catalogo',compact('productos'));
     }
 
 

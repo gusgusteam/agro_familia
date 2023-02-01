@@ -286,7 +286,7 @@ return [
                     'icon' => 'fas fa-dollar-sign',
                 ],
                 [
-                    'text' => 'PROVEEDOR',
+                    'text' => 'PROVEEDORES',
                     'route'  => 'proveedor.index',
                     'icon' => 'fas fa-dollar-sign',
                 ],

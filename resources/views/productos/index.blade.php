@@ -157,7 +157,7 @@
                             <div class="col-sm-6">
                               <div class="custom-file">
                                 <div class="form-group" >
-                                  <input style="cursor: pointer;" type="file" id="img_foto" name="img_foto" class="custom-file-input" aria-describedby="img_foto-error" aria-invalid="true" accept="image/jpeg,jpg,png" >
+                                  <input style="cursor: pointer;" type="file" id="img_foto" name="img_foto" class="custom-file-input" aria-describedby="img_foto-error" aria-invalid="true" accept="image/png" >
                                   <span id="img_foto" class="error invalid-feedback" style="display: none;"></span>
                                   <label class="custom-file-label align-middle" for="img_foto" data-browse="Buscar">Seleccione una foto</label>
                                 </div>
@@ -281,7 +281,7 @@
                   <div class="col-sm-6">
                     <div class="custom-file">
                       <div class="form-group" >
-                        <input style="cursor: pointer;" type="file" id="img_foto_modal_producto" name="img_foto_modal_producto" class="custom-file-input" aria-describedby="img_foto_modal_producto-error" aria-invalid="true" accept="image/jpeg,jpg,png" >
+                        <input style="cursor: pointer;" type="file" id="img_foto_modal_producto" name="img_foto_modal_producto" class="custom-file-input" aria-describedby="img_foto_modal_producto-error" aria-invalid="true" accept="image/png" >
                         <span id="img_foto_modal_producto" class="error invalid-feedback" style="display: none;"></span>
                         <label class="custom-file-label align-middle" for="img_foto_modal_producto" data-browse="Buscar">Seleccione una foto</label>
                       </div>

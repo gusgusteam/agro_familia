@@ -12,14 +12,14 @@
     <!-- small box -->
     <div class="small-box bg-info">
       <div class="inner">
-        <h3>150</h3>
+        <h3>{{$cant_productos}}</h3>
 
-        <p>New Orders</p>
+        <p>Productos</p>
       </div>
       <div class="icon">
         <i class="ion ion-bag"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="{{route('producto.catalogo')}}" class="small-box-footer">Ver Catalogo de Productos <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -67,11 +67,10 @@
       <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
-  <!-- ./col -->
+<div class="text-center">
+  
+  <img src="{{asset('imagenes/inicio.jpg')}}" class="img-fluid img-bordered" alt="no existe">
 </div>
-  <div class="text-center">
-    <img src="{{asset('imagenes/inicio.jpg')}}" class="img-fluid img-bordered" alt="no existe">
-  </div>
 
 @stop
 
