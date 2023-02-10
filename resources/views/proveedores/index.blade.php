@@ -13,9 +13,9 @@
   </ul>
   <div class="tab-content">
       <div class="active tab-pane" id="Proveedor">
-        <div class="card card-success">
+        <div class="card {{ config('adminlte.classes_index', '') }}">
           <div class="card-header">
-          <h3 class="card-title  w-100 text-center font-weight-bold text-light">LISTA DE PERSONAS</h3>
+          <h3 class="card-title {{ config('adminlte.classes_index_header', '') }}">LISTA DE PERSONAS</h3>
           </div>
           <div class="card-body">
             <div class="row mb-3">
@@ -48,9 +48,9 @@
         </div>
       </div>
       <div class="tab-pane" id="ProveedorEmpresa">
-        <div class="card card-success">
+        <div class="card {{ config('adminlte.classes_index', '') }}">
           <div class="card-header">
-          <h3 class="card-title  w-100 text-center font-weight-bold text-light">LISTA DE EMPRESAS</h3>
+          <h3 class="card-title {{ config('adminlte.classes_index_header', '') }}">LISTA DE EMPRESAS</h3>
           </div>
           <div class="card-body">
             <div class="row mb-3">
@@ -81,9 +81,9 @@
         </div>
       </div>
       <div class="tab-pane" id="ProveedorAgregar">
-          <div class="card card-success">
+          <div class="card {{ config('adminlte.classes_index', '') }}">
               <div class="card-header">
-              <h3 class="card-title  w-100 text-center font-weight-bold text-light">Agregar Proveedor</h3>
+              <h3 class="card-title  {{ config('adminlte.classes_index_header', '') }}">AGREGAR PROVEEDOR</h3>
               </div>
               <form  id="miform" name="miform" method="POST" novalidate="novalidate">
                   @csrf
@@ -194,9 +194,9 @@
 <div class="modal fade" id="modal-editar-persona" style="display: none;" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-        <div class="card card-primary">
+        <div class="card {{ config('adminlte.classes_modal', '') }}">
           <div class="card-header">
-          <h3 class="card-title  w-100 text-center font-weight-bold text-light">Datos Actuales</h3>
+          <h3 class="card-title {{ config('adminlte.classes_modal_header', '') }}">Datos Actuales</h3>
           </div>
           <form  id="miform_editar_persona" name="miform_editar_persona"  method="POST" novalidate="novalidate">
               @csrf
@@ -298,9 +298,9 @@
 <div class="modal fade" id="modal-editar-empresa" style="display: none;" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-        <div class="card card-primary">
+        <div class="card {{ config('adminlte.classes_modal', '') }}">
           <div class="card-header">
-          <h3 class="card-title  w-100 text-center font-weight-bold text-light">Datos Actuales</h3>
+          <h3 class="card-title  {{ config('adminlte.classes_modal_header', '') }}">Datos Actuales</h3>
           </div>
           <form  id="miform_editar_empresa" name="miform_editar_empresa" method="POST" novalidate="novalidate">
               @csrf
@@ -473,12 +473,12 @@
             {data: 'actions',searchable: false,orderable: false}
         ],
       })
-  }
+  };
 
   function recarga(){
      $('#example1').DataTable().ajax.reload();
      $("#example2").DataTable().ajax.reload();
-  }  
+  };  
  
   //guardar 
   $('#miform').submit(function(e){

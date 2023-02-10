@@ -13,9 +13,9 @@
   </ul>
   <div class="tab-content">
       <div class="active tab-pane" id="Producto">
-        <div class="card card-success">
+        <div class="card {{ config('adminlte.classes_index', '') }}">
           <div class="card-header">
-          <h3 class="card-title  w-100 text-center font-weight-bold text-light">LISTA DE PRODUCTOS</h3>
+          <h3 class="card-title  {{ config('adminlte.classes_index_header', '') }}">LISTA DE PRODUCTOS</h3>
           </div>
           <div class="card-body">
             <div class="row mb-3">
@@ -49,9 +49,9 @@
         </div>
       </div>
       <div class="tab-pane" id="ProductoAgregar">
-          <div class="card card-success">
+          <div class="card {{ config('adminlte.classes_index', '') }}">
               <div class="card-header">
-              <h3 class="card-title  w-100 text-center font-weight-bold text-light">AGREGAR PRODUCTO</h3>
+              <h3 class="card-title {{ config('adminlte.classes_index_header', '') }}">AGREGAR PRODUCTO</h3>
               </div>
               <form  id="miform" name="miform" method="POST" novalidate="novalidate">
                   @csrf
@@ -177,9 +177,9 @@
 <div class="modal fade" id="modal-editar-producto" style="display: none;" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-        <div class="card card-primary">
+        <div class="card {{ config('adminlte.classes_modal', '') }}">
           <div class="card-header">
-          <h3 class="card-title  w-100 text-center font-weight-bold text-light">Datos Actuales</h3>
+          <h3 class="card-title  {{ config('adminlte.classes_modal_header', '') }}">Datos Actuales</h3>
           </div>
           <form  id="miform_editar_producto" name="miform_editar_producto"  method="POST" novalidate="novalidate">
               @csrf
@@ -580,7 +580,7 @@
           cache: false,
           async: false,
           success:function(resultado){
-            toastr.success('El registro fue eliminado correctamente.', 'Eliminar Registro', {timeOut:3000})   
+            toastr.success('El registro fue eliminado correctamente.', 'Eliminar Registro', {timeOut:3000});   
             $('#ModalEliminar').modal('hide'); // salir modal
             recarga();        
           }
@@ -602,7 +602,7 @@
           cache: false,
           async: false,
           success:function(resultado){
-            toastr.success('El registro fue restaurado correctamente.', 'Restaurar Registro', {timeOut:3000})  
+            toastr.success('El registro fue restaurado correctamente.', 'Restaurar Registro', {timeOut:3000}); 
             $('#ModalRestaurar').modal('hide'); // salir modal
             recarga();         
           }
@@ -613,7 +613,7 @@
 
 <script type="text/javascript">
       
-      $('#miform').validate({
+    $('#miform').validate({
         rules: {
           nombre: {
             required: true,

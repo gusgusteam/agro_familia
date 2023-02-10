@@ -31,10 +31,10 @@
                     <thead>
                         <tr>
                             <th width="5%">Foto</th>
-                            <th width="11%"> caja </th>
-                            <th>Descripcion</th>
-                            <th width="8%">monto</th>
-                            <th width="13%">fecha y hora</th>
+                            <th width="15%"> caja </th>
+                            <th width="45%">Descripcion</th>
+                            <th width="5%">monto</th>
+                            <th width="10%">fecha y hora</th>
                             <th width="15%">remitente</th>
                             <th width="5%">Acción</th>
                         </tr>
@@ -49,41 +49,36 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="ModalPersonal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-        
-        <div class="modal-header border-bottom-0">
-          
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div class="container">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title  w-100 text-center font-weight-bold text-light">Datos Personal</h3>  
-            </div>
-            <div class="card-body">
-              <table id="personas_listas" class="table table-responsive-xl table-bordered table-sm table-hover table-striped">
-                  <thead>
-                      <tr>
-                          <th width="5%" >Foto</th>
-                          <th>Nombre</th>
-                          <th>Apellidos</th>
-                          <th>Direccion</th>
-                          <th width="10%">Telefono</th>
-                          <th width="8%">Nro carnet</th>
-                      </tr>
-                  </thead>
-              </table>
-            </div>
+<div class="modal fade" id="ModalPersonal" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+        <div class="card {{ config('adminlte.classes_modal', '') }}">
+          <div class="card-header">
+          <h3 class="card-title  {{ config('adminlte.classes_modal_header', '') }}">Personas Asociados</h3>
+          </div>
+          <div class="container">
+            <table id="personas_listas" class="table table-responsive-xl table-bordered table-sm table-hover table-striped">
+              <thead>
+                  <tr>
+                      <th width="5%" >Foto</th>
+                      <th width="20%">Nombre</th>
+                      <th width="20%">Apellidos</th>
+                      <th width="35%">Direccion</th>
+                      <th width="10%">Telefono</th>
+                      <th width="10%">Nro carnet</th>
+                  </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
-      </div>
     </div>
+  </div>
+  <!-- /.modal-dialog -->
 </div>
+
 
 
 @stop
@@ -102,7 +97,7 @@
 
   Activo('#example1'); // con que index va iniciar
 
-  function Activo(tabla){   
+  function Activo(tabla){
     $(tabla).DataTable({ 
       destroy: true,
       retrieve: true,
@@ -156,7 +151,7 @@
     $('#ModalPersonal').modal('show');
   }
   
-  function recarga(){
+  function recarga_global(){
     $('#example1').DataTable().ajax.reload();
   }
 
@@ -168,21 +163,11 @@
         url:"{{asset('')}}"+"egreso/marcar/"+id, dataType:'json',
         success: function(resultado){
           toastr.success(resultado, 'Registro', {timeOut:3000});
-          recarga();
+          recarga_global();
         }
     });         
   };
     
-  function Imagen(image){
-    Swal.fire({
-    title: '',
-    text: '',
-    imageUrl: image,
-    imageWidth: 400,
-    imageHeight: 400,
-    imageAlt: 'Custom image',
-    })   
-  }
 
 
 </script>

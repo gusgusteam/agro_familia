@@ -277,11 +277,108 @@
             imageAlt: 'Custom image',
             }) 
         }
+        selector_global();
+        function selector_global(){
+            $.ajax({ 
+                url:"{{asset('')}}"+"gestion/extra" , dataType:'json',
+                success: function(resultado){
+                    ////////////colocar el array al selectd ////////////////////
+                    $('#gestion_global').empty(); // limpiar antes de sobreescribir
+                    
+                    if({{session('gestion_id')}}==-1){    
+                        $('#gestion_global').append($('<option  />', {
+                        text: "gestion general",
+                        value: -1,
+                       // disabled:true,
+                        selected:true
+                        }));   
+                    }else{
+                        $('#gestion_global').append($('<option  />', {
+                        text: "gestion general",
+                        value: -1,
+                       // disabled:true,
+                       // selected:true
+                        }));  
+                    }
+                    
+                    resultado.gestion.forEach(function(elemento, indice, array) {
+                        if({{session('gestion_id')}}==elemento.id){
+                            $('#gestion_global').append($('<option  />', {
+                            text:  elemento.nombre,
+                            value: elemento.id,
+                            selected:true
+                            }));
+                        }else{
+                            $('#gestion_global').append($('<option  />', {
+                            text:  elemento.nombre,
+                            value: elemento.id,
+                            }));
+                        }
+                    });
+                }
+            });
+        };
+        
 
       </script>
+    
+    <script>
+        
+        $('#gestion_global').change(function (e) { 
+            cambiar_gestion_id($(this).val());
+            //
+           
+           
+        });
+
+        function cambiar_gestion_id(id_gestion){
+            $.ajax({ 
+                url:"{{asset('')}}"+"gestion/gestion_global_update/"+id_gestion , dataType:'json',
+                success: function(resultado){
+                    ////////////colocar el array al selectd ////////////////////
+                    if(resultado==1){
+                        calcular_gestion_caja();
+                        toastr.success("", 'Cambio de Gestion', {timeOut:3000});
+                        recarga_global();
+                    }
+                }
+            });
+        };
+        function calcular_gestion_caja(){
+            $.ajax({ 
+                url:"{{asset('')}}"+"gestion/gestion_global_caja/", dataType:'json',
+                success: function(resultado){
+                    ////////////colocar el array al selectd ////////////////////
+                    if(resultado.error==0){
+                        $('#ingreso_global').empty();     
+                        $('#egreso_global').empty();       
+                        var text_ingreso = resultado.ingreso_global + " bs"; 
+                        var text = document.createTextNode(text_ingreso);                           
+                        document.getElementById("ingreso_global").appendChild(text); 
+                        var text_egreso = resultado.egreso_global + " bs"; 
+                        var text2 = document.createTextNode(text_egreso);                           
+                        document.getElementById("egreso_global").appendChild(text2); 
+                       // toastr.success("", 'Datos de Caja de Gestion Actualizado', {timeOut:4000});
+                    }else{
+                        $('#ingreso_global').empty();     
+                        $('#egreso_global').empty();       
+                        var text_ingreso = resultado.ingreso_global + " bs"; 
+                        var text = document.createTextNode(text_ingreso);                           
+                        document.getElementById("ingreso_global").appendChild(text); 
+                        var text_egreso = resultado.egreso_global + " bs"; 
+                        var text2 = document.createTextNode(text_egreso);                           
+                        document.getElementById("egreso_global").appendChild(text2); 
+                      //  toastr.error("", 'Datos de Caja de Gestion Actualizado', {timeOut:4000});
+                    }
+                }
+            });
+        };
+    </script>
      
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
+
+   
 
     @if (\Session::has('success'))
         <script>
@@ -317,7 +414,7 @@
         <script>
             function limpiarFormulario() {
                 document.getElementById("miform").reset(); 
-            }
+            };
         </script>
     @endif
 

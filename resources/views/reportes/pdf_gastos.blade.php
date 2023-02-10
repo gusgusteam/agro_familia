@@ -16,9 +16,9 @@
         <div class="col-md-6">
           <div class="text-left">
             <span> <strong>remitente :</strong> {{Auth::user()->name .' '.Auth::user()->apellidos}}</span> <br>
-            <span> <strong>direccion :</strong>  san jose del norte</span> <br>
+            <span> <strong>direccion :</strong>  San Jose Del Norte</span> <br>
             <span> <strong>fecha y hora :</strong> {{date('y-n-d h:i:s ')}}</span> <br>
-            <span> <strong>gestion :</strong>  1-2019 verano</span> <br>
+            <span> <strong>gestion :</strong>    {{$nombre_gestion}}</span> <br>
           </div>
         </div>
         <div class="col-md-6">

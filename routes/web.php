@@ -81,6 +81,9 @@ Route::controller(GestionController::class)->group(function (){
     Route::get('gestion/buscar/{id}','buscarPorGestion')->name('gestion.buscar');
     Route::get('gestion/destroy/{id}','destroy')->name('gestion.destroy');
     Route::get('gestion/restore/{id}','restore')->name('gestion.restore');  
+    Route::get('gestion/extra','extra')->name('gestion.extra');
+    Route::get('gestion/gestion_global_update/{id_gestion}','gestion_global_update')->name('gestion.gestion_global_update');
+    Route::get('gestion/gestion_global_caja','gestion_global_caja')->name('gestion.gestion_global_caja');
     // gastos de gestion con caja
     Route::get('gestion/gasto/{id}/{sw}','gastos_gestion')->name('gestion.gasto');  
     Route::get('gestion/tipo','buscarTipos')->name('gestion.tipo');

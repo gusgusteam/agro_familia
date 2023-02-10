@@ -25,52 +25,66 @@
 </style>
 
 @section('content')
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header p-2">
-          <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link active"   href="#Gestion"  data-toggle="tab"><i class="fas fa-user"></i>&nbsp;&nbsp;Gestion</a></li>
-            <li class="nav-item"><a class="nav-link"    onclick="limpiarFormulario()" href="#GestionAgregar" data-toggle="tab"><i class="fas fa-plus"></i>&nbsp;&nbsp;Agregar</a></li>
-            <li class="nav-item"><a class="nav-link"    href="#GestionEliminados" data-toggle="tab"><i class="far fa-trash-alt"></i>&nbsp;&nbsp;Eliminados</a></li>             
-          </ul>
-        </div> 
-        <div class="card-body">
-          <div class="tab-content">
-            <div class="active tab-pane" id="Gestion">     
-                <table id="example1" class="table table-responsive-xl table-bordered table-sm table-hover table-striped"  >
-                    <thead>
-                        <tr>  
-                          <th width="4%"> id </th>
-                          <th>Gestion-tiempo</th>
-                          <th>Descripcion</th>
-                          <th>Fecha Inicial</th>
-                          <th>Fecha Final</th>
-                          <th>Estado</th>
-                          <th width="7%">Acción</th>
-                        </tr>
-                    </thead>  
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="tab-pane" id="GestionEliminados">
-                <table id="example2"  class="table table-responsive-xl table-bordered table-sm table-hover table-striped"  >
-                    <thead>
-                      <tr>  
-                        <th width="4%"> id </th>
-                        <th>Gestion-tiempo</th>
-                        <th>Descripcion</th>
-                        <th>Fecha Inicial</th>
-                        <th>Fecha Final</th>
-                        <th>Estado</th>
-                        <th width="5%">Acción</th>
-                      </tr>
-                    </thead>  
-                    <tfoot>
-                    </tfoot>
-                </table>  
-            </div>
-            <div class="tab-pane" id="GestionAgregar">
+<ul class="nav nav-pills nav-tabs mb-3 justify-content-center">
+  <li class="nav-item"><a class="nav-link active"   href="#Gestion"  data-toggle="tab"><i class="fas fa-user"></i>&nbsp;&nbsp;Gestion</a></li>
+  <li class="nav-item"><a class="nav-link"    onclick="limpiarFormulario()" href="#GestionAgregar" data-toggle="tab"><i class="fas fa-plus"></i>&nbsp;&nbsp;Agregar</a></li>
+  <li class="nav-item"><a class="nav-link"    href="#GestionEliminados" data-toggle="tab"><i class="far fa-trash-alt"></i>&nbsp;&nbsp;Eliminados</a></li>             
+</ul>
+<div class="tab-content">
+  <div class="active tab-pane" id="Gestion"> 
+    <div class="card {{ config('adminlte.classes_index', '') }}">
+      <div class="card-header">
+      <h3 class="card-title {{ config('adminlte.classes_index_header', '') }} ">LISTA DE GESTION</h3>
+      </div>
+      <div class="card-body">
+        <table id="example1" class="table table-responsive-xl table-bordered table-sm table-hover table-striped"  >
+            <thead>
+                <tr>  
+                  <th width="15%">Gestion-tiempo</th>
+                  <th width="35%">Descripcion</th>
+                  <th width="10%">Fecha Inicial</th>
+                  <th width="15%">Fecha Final</th>
+                  <th width="10%">Estado Actual</th>
+                  <th width="10%">Acción</th>
+                </tr>
+            </thead>  
+            <tfoot>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="GestionEliminados"> 
+    <div class="card {{ config('adminlte.classes_index', '') }}">
+      <div class="card-header">
+      <h3 class="card-title {{ config('adminlte.classes_index_header', '') }} ">LISTA DE GESTION</h3>
+      </div>
+      <div class="card-body">
+        <table id="example2" class="table table-responsive-xl table-bordered table-sm table-hover table-striped"  >
+            <thead>
+                <tr>  
+                  <th width="15%">Gestion-tiempo</th>
+                  <th width="35%">Descripcion</th>
+                  <th width="10%">Fecha Inicial</th>
+                  <th width="15%">Fecha Final</th>
+                  <th width="10%">Estado Actual</th>
+                  <th width="10%">Acción</th>
+                </tr>
+            </thead>  
+            <tfoot>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="GestionAgregar">
+    <div class="card {{ config('adminlte.classes_index', '') }}">
+      <div class="card-header">
+      <h3 class="card-title  {{ config('adminlte.classes_index_header', '') }}">AGREGAR GESTION</h3>
+      </div>
+      <form  id="miform" name="miform" method="POST" novalidate="novalidate">
+          @csrf
+          <div class="card-body">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -80,95 +94,68 @@
                   </div>
                 </div>
               </div>
-              <form id="miform" method="POST" enctype="multipart/form-data"  autocomplete="off" class="needs-validation" novalidate>
-                    @csrf
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                            <label for="gestion">Gestion tiempo</label> 
-                            <input class="form-control" id="gestion" name="gestion" type="text" placeholder="ingrese un nombre de la gestion "  required />
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                            <label for="descripcion">Descripcion</label> 
-                            <input class="form-control" id="descripcion" name="descripcion" type="text" placeholder="todos los cultivos a senbrar ? "  required />
-                            </div>
-                        </div>
-                    </div>
-                  
-                    <div class="d-flex justify-content-end">
-                        <div>
-                        <button type="submit" class= "btn btn-success btn-sm">Guardar</button>  
-                        </div>
-                    </div>
-                </form>
-            </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="gestion">Gestion tiempo</label>
+                          <input type="text" name="gestion" class="form-control" id="gestion" placeholder="ingrese la gestion ejem: 1-2000" aria-describedby="gestion-error" aria-invalid="true" >
+                          <span  id="gestion-error" class="error invalid-feedback" style="display: none;"></span>
+                      </div>
+                  </div>
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="descripcion">Descripcion</label>
+                          <textarea type="text" name="descripcion" class="form-control" id="descripcion" placeholder="ingrese la descripcion" aria-describedby="descripcion-error" aria-invalid="true"></textarea>
+                          <span id="descripcion-error" class="error invalid-feedback" style="display: none;"></span>
+                      </div>
+                  </div>
+              </div>                 
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header border-bottom-0">
-            <h5 class="modal-title" id="exampleModalLabel">Editar Gestion</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form id="FormEdicion">
-            @csrf
-            <div class="modal-body">
-              <input type="hidden" class="form-control" id="id_edit" value="1">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="gestionM">Gestion-tiempo</label>
-                    <input type="text" class="form-control" name="gestionM" id="gestionM" >
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="descripcionM">Descripcion</label>
-                    <textarea  class="form-control" name="descripcionM" id="descripcionM" > </textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="fecha_inicialM">Fecha Inicio</label>
-                    <input type="text" class="form-control" name="fecha_inicialM" id="fecha_inicialM" disabled >
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="fecha_finalM">Fecha De Cierre</label>
-                    <input type="text" class="form-control" name="fecha_finalM" id="fecha_finalM"  disabled >
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="estadoM">Estado</label>
-                    <select class="form-control"  id="estadoM" name="estadoM" required>
-                      <option disabled value="">Seleccionar un estado</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <div class="card-footer">
               <button type="submit" class="btn btn-success">Guardar</button>
-            </div>
+          </div>
+      </form>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-editar-gestion" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="card {{ config('adminlte.classes_modal', '') }}">
+          <div class="card-header">
+          <h3 class="card-title  {{ config('adminlte.classes_modal_header', '') }}">Datos Actuales</h3>
+          </div>
+          <form  id="miform_editar_gestion" name="miform_editar_gestion" method="POST" novalidate="novalidate">
+              @csrf
+              <input type="hidden" name="id_modal_gestion" id="id_modal_gestion">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="gestion_modal_gestion">Gestion tiempo</label>
+                          <input type="text" name="gestion_modal_gestion" class="form-control" id="gestion_modal_gestion" placeholder="ingrese la gestion ejem: 1-2000" aria-describedby="gestion_modal_gestion-error" aria-invalid="true" >
+                          <span  id="gestion_modal_gestion-error" class="error invalid-feedback" style="display: none;"></span>
+                      </div>
+                  </div>
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="descripcion_modal_gestion">Descripcion</label>
+                          <textarea type="text" name="descripcion_modal_gestion" class="form-control" id="descripcion_modal_gestion" placeholder="ingrese la descripcion" aria-describedby="descripcion_modal_gestion-error" aria-invalid="true"></textarea>
+                          <span id="descripcion_modal_gestion-error" class="error invalid-feedback" style="display: none;"></span>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-success">Actualizar</button>
+              </div>
           </form>
-        </div>
       </div>
     </div>
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
 @stop
 
@@ -199,7 +186,6 @@
           dataType: 'json',
           type: "POST",
           columns: [
-              {data: 'id',searchable: false,orderable: false},
               {data: 'nombre',orderable: false},
               {data: 'descripcion',orderable: false},
               {data: 'fecha_inicial'},
@@ -224,7 +210,6 @@
           dataType: 'json',
           type: "POST",
           columns: [
-            {data: 'id',searchable: false,orderable: false},
             {data: 'nombre',orderable: false},
             {data: 'descripcion',orderable: false},
             {data: 'fecha_inicial'},
@@ -239,8 +224,7 @@
   function recarga(){
     $('#example1').DataTable().ajax.reload();
     $('#example2').DataTable().ajax.reload(); 
-  }
-
+  };
    //guardar 
    $('#miform').submit(function(e){
       e.preventDefault();
@@ -253,11 +237,13 @@
           data: new FormData($('#miform')[0]),    
           success:function(response){
             if (response.error==1){
-                toastr.error(response.mensaje, 'Guardar Registro', {timeOut:7000})
+               // toastr.error(response.mensaje, 'Guardar Registro', {timeOut:7000});
+                toastr.error('revice sus errores por favor', 'Guardar Registro', {timeOut:7000});
                }else{
                   toastr.success('El registro fue guardado correctamente.', 'Guardar Registro', {timeOut:3000}) 
-                  recarga();
-                  limpiarFormulario();  
+                  limpiarFormulario();
+                  removeClass(); 
+                  recarga(); 
                }
           }
     })
@@ -267,16 +253,16 @@
     $.ajax({
         url:"{{asset('')}}"+"gestion/buscar/"+id, dataType:'json',
         success: function(resultado){
-          $("#id_edit").val(resultado.datos.id);
-          $("#gestionM").val(resultado.datos.nombre);
-          $("#descripcionM").val(resultado.datos.descripcion);
-          $("#fecha_inicialM").val(resultado.datos.fecha_inicial);
-          $('#fecha_finalM').val("no finalizo la campaña");
+          removeClassEditarGestion();
+          $("#id_modal_gestion").val(resultado.datos.id);
+          $("#gestion_modal_gestion").val(resultado.datos.nombre);
+          $("#descripcion_modal_gestion").val(resultado.datos.descripcion);
+          $('#modal-editar-gestion').modal('show'); // abrir el modal
+          ////////////colocar el array al selectd ////////////////////
+          /*
           if(resultado.datos.fecha_final){
             $("#fecha_finalM").val(resultado.datos.fecha_final);
           }
-          $('#ModalEditar').modal('show'); // abrir el modal
-          ////////////colocar el array al selectd ////////////////////
           $('#estadoM').empty(); // limpiar antes de sobreescribir
           var $sw=resultado.datos.estado;
           $('#estadoM').append($('<option  />', {
@@ -291,30 +277,33 @@
           text: 'Campaña en observacion',
           value: -1,
           }));
+          */
              
         }
     });         
   }
   //ACTUALIZAR UN REGISTRO
-  $('#FormEdicion').submit(function(e){
+  $('#miform_editar_gestion').submit(function(e){
       e.preventDefault();
-      var id=$("#id_edit").val();
+      var id=$("#id_modal_gestion").val();
       var link="{{asset('')}}"+"gestion/update/"+id;
       $.ajax({
           url: link,
           type: "POST",
           processData: false,
           contentType: false,
-          data: new FormData($('#FormEdicion')[0]),   
+          data: new FormData($('#miform_editar_gestion')[0]),   
           success:function(response){
-              if(response){
-                  toastr.success('El registro fue actualizado correctamente.', 'Actualizar Registro', {timeOut:3000})  
-                  $('#ModalEditar').modal('hide'); // salir modal
-                  recarga();       
-              }
+              if(response.error==1){
+               // toastr.error(response.mensaje, 'Actualizar Registro', {timeOut:3000}) 
+                toastr.error('revice sus errores por favor', 'Guardar Registro', {timeOut:7000})
+            }else{
+                toastr.success('El registro fue actualizado correctamente.', 'Actualizar Registro', {timeOut:3000});
+                recarga(); 
+                $('#modal-editar-gestion').modal('hide'); // salir modal         
+            }
           }
       })
-    
   });
   //
 
@@ -365,5 +354,79 @@
     recarga();
   });
   //
+
+  $('#miform').validate({
+        rules: {
+          gestion: {
+            required: true,
+          },
+          descripcion: {
+            required: true,
+          }
+        },
+        messages: {
+          gestion: {
+            required: "Por favor, introduzca su nombre de la gestion",
+          },
+          descripcion: {
+            required: "Por favor, introduzca su descripcion ",
+          }
+        },
+        errorElement: 'span',
+        
+        errorPlacement: function (error, element) {
+           error.addClass('invalid-feedback');
+           element.closest('.form-group').append(error);  
+        },
+        
+        highlight: function (element, errorClass, validClass) {
+         $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+         $(element).removeClass('is-invalid').addClass( "is-valid" );
+        }                 
+    });
+
+    $('#miform_editar_gestion').validate({
+        rules: {
+          gestion_modal_gestion: {
+            required: true,
+          },
+          descripcion_modal_gestion: {
+            required: true,
+          }
+        },
+        messages: {
+          gestion_modal_gestion: {
+            required: "Por favor, introduzca su nombre de la gestion ",
+          },
+          descripcion_modal_gestion: {
+            required: "Por favor, introduzca su descripcion ",
+          }
+        },
+        errorElement: 'span',
+        
+        errorPlacement: function (error, element) {
+           error.addClass('invalid-feedback');
+           element.closest('.form-group').append(error);  
+        },
+        
+        highlight: function (element, errorClass, validClass) {
+         $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+         $(element).removeClass('is-invalid').addClass( "is-valid" );
+        }               
+      
+    });
+
+    function removeClass(){
+      $("#gestion").removeClass(["is-valid","is-invalid"]);
+      $("#descripcion").removeClass(["is-valid","is-invalid"]);
+    };
+    function removeClassEditarGestion(){
+      $("#gestion_modal_gestion").removeClass(["is-valid","is-invalid"]);
+      $("#descripcion_modal_gestion").removeClass(["is-valid","is-invalid"]);
+    }
   </script>
 @stop

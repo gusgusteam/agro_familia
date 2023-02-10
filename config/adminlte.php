@@ -155,6 +155,12 @@ return [
 
 
     'classes_auth_card' => 'card-outline card-success',
+    // clase perzonalizada
+    'classes_index' => 'card-outline card-primary',
+    'classes_index_header' => 'w-100 text-center font-weight-bold ',
+    'classes_modal' => 'card-primary',
+    'classes_modal_header' => 'w-100 text-center font-weight-bold text-white ',
+    //
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
@@ -231,7 +237,7 @@ return [
             'label'        => 0,                      // The initial label for the badge (optional).
             'label_color'  => 'danger',               // The initial badge color (optional).
             'url'          => 'notifications/show',   // The url to access all notifications/elements (required).
-            'topnav_right' => true,                   // Or "topnav => true" to place on the left (required).
+            'topnav_right' => false,                   // Or "topnav => true" to place on the left (required).
             'dropdown_mode'   => true,                // Enables the dropdown mode (optional).
             'dropdown_flabel' => 'All notifications', // The label for the dropdown footer link (optional).
             'update_cfg'   => [
@@ -244,7 +250,7 @@ return [
             'id'           => 'my-notification',
             'icon'         => 'fas fa-bell',
             'url'          => 'notifications/show',
-            'topnav_right' => true,
+            'topnav_right' => false,
             'dropdown_mode'   => true,
             'dropdown_flabel' => 'All notifications',
             'update_cfg'   => [
@@ -265,11 +271,6 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
         ],
         
         ['header' => 'PANEL'],
@@ -402,17 +403,17 @@ return [
                 ],
                
                 
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => 'vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js',
-                ],
+               
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js',
                 ],
-                
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js',
+                ],
                  /* archivos pdf y excel
                 [
                     'type' => 'js',
@@ -528,7 +529,7 @@ return [
             ],
         ],
         'Toastr' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'css',

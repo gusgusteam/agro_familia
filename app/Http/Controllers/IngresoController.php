@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ingreso;
 use App\Models\ingreso_empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class IngresoController extends Controller
@@ -20,8 +21,7 @@ class IngresoController extends Controller
 
     public function DatosServerSideActivo(Request $request){
         if ($request->ajax()) {
-           
-             //$roles=Empleado::all()->where('activo',1); no ocuparlo
+            if(session('gestion_id') != -1){
              $ingreso=Ingreso::select(
                 'ingresos.*',
                 'users.name',
@@ -32,18 +32,37 @@ class IngresoController extends Controller
                // ->join('users','users.id')
              ->join('users','users.id','=','ingresos.id_usuario')
              ->join('cajas','cajas.id','=','ingresos.id_caja')
-             ->orderBy('ingresos.created_at','desc');
+             ->orderBy('ingresos.created_at','desc')
+             ->where('cajas.id_gestion','=',session('gestion_id'));
+            }else{
+                $ingreso=Ingreso::select(
+                    'ingresos.*',
+                    'users.name',
+                    'users.apellidos',
+                    'users.email',
+                    'cajas.nombre as caja_nombre'
+                    )
+                   // ->join('users','users.id')
+                 ->join('users','users.id','=','ingresos.id_usuario')
+                 ->join('cajas','cajas.id','=','ingresos.id_caja')
+                 ->orderBy('ingresos.created_at','desc')
+                 ->where('users.id','=',Auth::user()->id);   
+            }
              //->get();
              return DataTables::of($ingreso)
                 // anadir nueva columna botones
                  ->addColumn('actions', function($ingreso){
                     $button2='<a class="btn  btn-success" rel="tooltip" data-placement="top" title="Detalles" onclick="Detalles('.$ingreso->id.')" ><i class="fab fa-wpforms"></i></a>';
-                    if ($ingreso->visto==0){
-                        $button='<a class="btn  btn-default" rel="tooltip" data-placement="top" title="Leer" onclick="Marcar('.$ingreso->id.')" ><i class="fas fa-eye"></i></a>';
+                    if(Auth::user()->id != $ingreso->id_usuario){
+                        if ($ingreso->visto==0){
+                            $button='<a class="btn  btn-default" rel="tooltip" data-placement="top" title="Leer" onclick="Marcar('.$ingreso->id.')" ><i class="fas fa-eye"></i></a>';
+                        }else{
+                            $button='<a class="btn  btn-primary disabled" rel="tooltip" data-placement="top" title="Leer" onclick="Marcar('.$ingreso->id.')" ><i class="fas fa-eye"></i></a>';
+                        }
                     }else{
-                        $button='<a class="btn  btn-primary" rel="tooltip" data-placement="top" title="Leer" onclick="Marcar('.$ingreso->id.')" ><i class="fas fa-eye"></i></a>';
+                        $button='';
                     }
-                    $btn= ' <div class="text-center" > <div class="btn-group btn-group-sm">'
+                    $btn= ' <div class="text-right" > <div class="btn-group btn-group-sm">'
                     .$button2
                     .$button.
                     '</div> </div>';

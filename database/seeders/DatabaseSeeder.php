@@ -138,18 +138,22 @@ class DatabaseSeeder extends Seeder
 
         Tipo::create([
             'nombre'=>'ninguno',
+            'option'=>1
         ]);
         Tipo::create([
-            'nombre'=>'rastreada',
+            'nombre'=>'servicio tractor',
+            'option'=>1
         ]);
         Tipo::create([
-            'nombre'=>'roleada',
+            'nombre'=>'trabajo normal',
+            'option'=>1
         ]);
         Tipo::create([
-            'nombre'=>'jumigada',
+            'nombre'=>'adelanto de trabajo',
+            'option'=>1
         ]);
         Tipo::create([
-            'nombre'=>'trabajo tractorista',
+            'nombre'=>'adelanto alquiler',
         ]);
         Tipo::create([
             'nombre'=>'adelanto',
@@ -328,7 +332,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-        User::factory(100)->create();
+       // User::factory()->create();
 
     }
 }

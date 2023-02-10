@@ -28,14 +28,21 @@ class UsuarioController extends Controller
 
     public function DatosServerSideActivo(Request $request){
         if ($request->ajax()) {
-             $user=User::select('users.*')->with('roles')->where('users.estado','=',1);
+             $user=User::select('users.*')->with('roles')
+             ->where('users.estado','=',1);
              return DataTables::of($user)
                 // anadir nueva columna botones
                  ->addColumn('actions', function($user){
+                    if($user->estado==0){
+                        $btn2='<a class="btn btn-secondary" rel="tooltip" data-placement="top" title="Restaurar" onclick="Restaurar('.$user->id.')"><i class="fas fa-arrow-alt-circle-up"></i></a>';
+                    }
+                    if($user->estado==1){
+                        $btn2='<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Eliminar" onclick="Eliminar('.$user->id.')"><i class="far fa-trash-alt"></i></a>';
+                    }
                      $btn= '<div class="btn-group btn-group-sm">'
                      .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Editar" onclick="Modificar('.$user->id.')" ><i class="far fa-edit"></i></a>'
-                     .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Eliminar" onclick="Eliminar('.$user->id.')"><i class="far fa-trash-alt"></i></a>
-                     </div>';
+                     .$btn2
+                     .'</div>';
                    return  $btn;
                  })
                 // 
@@ -56,24 +63,41 @@ class UsuarioController extends Controller
                        return 'no tiene rol';
                     }
                 })
-                 ->rawColumns(['actions','foto','rol_uso']) // incorporar columnas
+                ->addColumn('estado', function($user){
+
+                    if($user->estado==0){
+                        $span= '<span class="badge bg-danger">: inactivo</span>';
+                    }
+                    if($user->estado==1){
+                        $span= '<span class="badge bg-success">: activo</span>';
+                    }
+
+                  return  $span;
+                 })
+                 ->rawColumns(['actions','foto','rol_uso','estado']) // incorporar columnas
                  ->make(true); // convertir a codigo
         }
     }
-
     public function DatosServerSideInactivo(Request $request){
         if ($request->ajax()) {
-            $user=User::select('users.*')->with('roles')->where('users.estado','=',0);
+             $user=User::select('users.*')->with('roles')
+             ->where('users.estado','=',0);
              return DataTables::of($user)
                 // anadir nueva columna botones
                  ->addColumn('actions', function($user){
-                     //$url= route('rol.permisos',$roles->id);
+                    if($user->estado==0){
+                        $btn2='<a class="btn btn-secondary" rel="tooltip" data-placement="top" title="Restaurar" onclick="Restaurar('.$user->id.')"><i class="fas fa-arrow-alt-circle-up"></i></a>';
+                    }
+                    if($user->estado==1){
+                        $btn2='<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Eliminar" onclick="Eliminar('.$user->id.')"><i class="far fa-trash-alt"></i></a>';
+                    }
                      $btn= '<div class="btn-group btn-group-sm">'
-                     .'<a class="btn btn-secondary" rel="tooltip" data-placement="top" title="Restaurar" onclick="Restaurar('.$user->id.')"><i class="fas fa-arrow-alt-circle-up"></i></a>
-                     </div>';
+                     .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Editar" onclick="Modificar('.$user->id.')" ><i class="far fa-edit"></i></a>'
+                     .$btn2
+                     .'</div>';
                    return  $btn;
                  })
-                //
+                // 
                 ->addColumn('foto', function($user){
                     $imagen='imagenes/usuarios/'.$user->id.'.jpg';
                      if (!file_exists($imagen)) {
@@ -81,7 +105,8 @@ class UsuarioController extends Controller
                      }
                     $url=asset($imagen.'?'.time());
                     $r="'";
-                    return  ' <a class="btn btn-sm" rel="tooltip" data-placement="top" title="Ver imagen" onclick="Imagen('.$r.$url.$r.')">  <div class="text-center" > <img width="50" height="30" src="'.$url.'"/> </div> </a>'; 
+                    return  ' <a class="btn btn-sm" rel="tooltip" data-placement="top" title="Ver imagen" onclick="Imagen('.$r.$url.$r.')">  <div class="text-center" > <img width="50" height="30" src="'.$url.'"/> </div> </a>';
+                 
                 })
                 ->addColumn('rol_uso' , function($user){
                     if (isset($user->roles['0']->name)){
@@ -90,7 +115,18 @@ class UsuarioController extends Controller
                        return 'no tiene rol';
                     }
                 })
-                 ->rawColumns(['actions','foto','rol_uso']) // incorporar columnas
+                ->addColumn('estado', function($user){
+
+                    if($user->estado==0){
+                        $span= '<span class="badge bg-danger">: inactivo</span>';
+                    }
+                    if($user->estado==1){
+                        $span= '<span class="badge bg-success">: activo</span>';
+                    }
+
+                  return  $span;
+                 })
+                 ->rawColumns(['actions','foto','rol_uso','estado']) // incorporar columnas
                  ->make(true); // convertir a codigo
         }
     }
@@ -103,13 +139,16 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
+        $data['error']=0;
+        $data['error_email']=0;
+        $data['error_password']=0;
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'edad' => 'required|integer|min:2',
             'telefono' => 'required|digits_between: 1,9',
             'apellidos' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
-            'img_perfil' => 'image|mimes:jpg,jpeg',
+           //'img_perfil' => 'image|mimes:jpg,jpeg',
             'password' => 'required|string|min:2|confirmed',
             'email' => 'required|string|email|max:255|unique:users',
             'id_rol2' => 'required',
@@ -117,6 +156,14 @@ class UsuarioController extends Controller
 
         if($validator->fails())
         {
+            if(Validator::make($request->all(),['email' => 'unique:users'])->fails()){
+                $data=['error_email'=>'1','mensaje'=> $request->email." ya existe"];
+                return $data;
+            }
+            if(Validator::make($request->all(),['password' => 'confirmed'])->fails()){
+                $data=['error_password'=>'1','mensaje'=> "password no coinciden"];
+                return $data;
+            }
             $data=['error'=>'1','mensaje'=>$validator->errors()->all()];  // all() 
             return $data;
         }
@@ -130,13 +177,13 @@ class UsuarioController extends Controller
             'telefono'=> $request->telefono,
             'password' => Hash::make($request->password),
         ])->assignRole($request->id_rol2);
-        if ($request->hasFile("img_perfil")) {//existe un campo de tipo file?
-            $imagen = $request->file("img_perfil"); //almacenar imagen en variable
+        if ($request->hasFile("img_foto")) {//existe un campo de tipo file?
+            $imagen = $request->file("img_foto"); //almacenar imagen en variable
             $nombreimagen=Str::slug($usuario->id).".".$imagen->guessExtension();//insertar parametro del nombre de imagen
             $ruta = public_path("imagenes/usuarios/");//guardar en esa ruta
             $imagen->move($ruta,$nombreimagen); //mover la imagen es esa ruta y con ese nombre      
         }
-        return $request;     
+        return $data;     
     }
 
     public function update_perfil(Request $request)
@@ -206,17 +253,31 @@ class UsuarioController extends Controller
     }
     public function update(Request $request,$id)
     {
+        $data['error']=0;
+        $validator = Validator::make($request->all(), [
+            'id_rol_nuevo' => 'required',
+        ]);
+
+        if($validator->fails())
+        {
+            $data=['error'=>'1','mensaje'=>$validator->errors()->all()];  // all() 
+            return $data;
+        }
+
         $user=User::findOrFail($id);
+
         $user->removeRole($request->id_rol_antiguo);
         $user->assignRole($request->id_rol_nuevo);
-        return $request;
+
+        return $data;
     }
 
     public function buscarPoUsuario($id){
         if ($id==-1){ //  cuando requiera los roles para crear un usuario
-            $role = Role::all();
+           // $role = Role::all()->where('activo','=',1);
+            $role =Role::select('roles.*')->where('roles.activo','=',1)->get();
             $res['roles']=$role;
-            echo json_encode($res);
+            return json_encode($res);
         }else{
         $user=User::findOrFail($id);
         $id_rol_user = User::with('roles')->where('id',$id)->first();

@@ -6,6 +6,7 @@ use App\Models\Egreso;
 use App\Models\egreso_empleado;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class EgresoController extends Controller
@@ -23,28 +24,48 @@ class EgresoController extends Controller
         if ($request->ajax()) {
            
              //$roles=Empleado::all()->where('activo',1); no ocuparlo
-             $egreso=Egreso::select(
-                'egresos.*',
-                'users.name',
-                'users.apellidos',
-                'users.email',
-                'cajas.nombre as caja_nombre'
-                )
-               // ->join('users','users.id')
-             ->join('users','users.id','=','egresos.id_usuario')
-             ->join('cajas','cajas.id','=','egresos.id_caja')
-             ->orderBy('egresos.created_at','desc');
+             if(session('gestion_id') != -1){
+                $egreso=Egreso::select(
+                    'egresos.*',
+                    'users.name',
+                    'users.apellidos',
+                    'users.email',
+                    'cajas.nombre as caja_nombre'
+                    )
+                   // ->join('users','users.id')
+                 ->join('users','users.id','=','egresos.id_usuario')
+                 ->join('cajas','cajas.id','=','egresos.id_caja')
+                 ->orderBy('egresos.created_at','desc')
+                 ->where('cajas.id_gestion','=',session('gestion_id')); 
+             }else{
+                $egreso=Egreso::select(
+                    'egresos.*',
+                    'users.name',
+                    'users.apellidos',
+                    'users.email',
+                    'cajas.nombre as caja_nombre'
+                    )
+                   // ->join('users','users.id')
+                 ->join('users','users.id','=','egresos.id_usuario')
+                 ->join('cajas','cajas.id','=','egresos.id_caja')
+                 ->orderBy('egresos.created_at','desc')
+                 ->where('users.id','=',Auth::user()->id);
+                // ->where('cajas.id_gestion','=',session('gestion_id'));
+             }
+            
              //->get();
              return DataTables::of($egreso)
                 // anadir nueva columna botones
                  ->addColumn('actions', function($egreso){
                     $button2='<a class="btn  btn-success" rel="tooltip" data-placement="top" title="Detalles" onclick="Detalles('.$egreso->id.')" ><i class="fab fa-wpforms"></i></a>';
+                if(Auth::user()->id != $egreso->id_usuario){
                     if ($egreso->visto==0){
                         $button='<a class="btn  btn-default" rel="tooltip" data-placement="top" title="Leer" onclick="Marcar('.$egreso->id.')" ><i class="fas fa-eye"></i></a>';
                     }else{
                         $button='<a class="btn  btn-primary" rel="tooltip" data-placement="top" title="Leer" onclick="Marcar('.$egreso->id.')" ><i class="fas fa-eye"></i></a>';
                     }
-                     $btn= ' <div class="text-center" > <div class="btn-group btn-group-sm">'
+                }else{ $button='';}
+                     $btn= ' <div class="text-right" > <div class="btn-group btn-group-sm">'
                      .$button2
                      .$button.
                      '</div> </div>';

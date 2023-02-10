@@ -21,27 +21,25 @@ class EmpleadoController extends Controller
 
     public function DatosServerSideActivo(Request $request){
         if ($request->ajax()) {
-           
-             //$roles=Empleado::all()->where('activo',1); no ocuparlo
              $empleado=Empleado::select('empleados.*')
-             ->where('empleados.activo','=',1);
+             ->get();
+             //->where('empleados.activo','=',1);
              return DataTables::of($empleado)
                 // anadir nueva columna botones
                  ->addColumn('actions', function($empleado){
-                    // $url= route('rol.permisos',$empleado->id);
-                    // $url2= route('rol.destroy', $roles->id);
+                    if($empleado->activo==0){
+                        $btn2='<a class="btn btn-secondary" rel="tooltip" data-placement="top" title="Restaurar" onclick="Restaurar('.$empleado->id.')"><i class="fas fa-arrow-alt-circle-up"></i></a>';
+                    }
+                    if($empleado->activo==1){
+                        $btn2='<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Eliminar" onclick="Eliminar('.$empleado->id.')"><i class="far fa-trash-alt"></i></a>';
+                    }
                      $btn= '<div class="btn-group btn-group-sm">'
                      .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Editar" onclick="Modificar('.$empleado->id.')" ><i class="far fa-edit"></i></a>'
-                     .'<a class="btn btn-dark" rel="tooltip" data-placement="top" title="Eliminar" onclick="Eliminar('.$empleado->id.')"><i class="far fa-trash-alt"></i></a>
-                     </div>';
+                     .$btn2
+                     .'</div>';
                    return  $btn;
                  })
-                 ->addColumn('nombre_apellidos', function($empleado){
-                    // $url= route('rol.permisos',$empleado->id);
-                    // $url2= route('rol.destroy', $roles->id);
-                     $x= $empleado->nombre.' '.$empleado->apellidos;
-                   return  $x;
-                 })
+
                  ->addColumn('foto', function($empleado){
                     $imagen='imagenes/empleados/'.$empleado->id.'.jpg'; 
                     if (!file_exists($imagen)) { // existe la imagen con el nombre del id empleado
@@ -50,11 +48,20 @@ class EmpleadoController extends Controller
                    $url=asset($imagen.'?'.time());
                    $r="'";
                    return  ' <a class="btn btn-sm" rel="tooltip" data-placement="top" title="Ver imagen" onclick="Imagen('.$r.$url.$r.')">  <div class="text-center" > <img width="50" height="30" src="'.$url.'"/> </div> </a>';
-                
-                //  return  '<div class="text-center" > <img width="50" height="30" src="'.$url.'"/> </div>';
+                 })
+                 ->addColumn('estado', function($empleado){
+
+                    if($empleado->activo==0){
+                        $span= '<span class="badge bg-danger">: inactivo</span>';
+                    }
+                    if($empleado->activo==1){
+                        $span= '<span class="badge bg-success">: activo</span>';
+                    }
+
+                  return  $span;
                  })
                 // 
-                 ->rawColumns(['actions','nombre_apellidos','foto']) // incorporar columnas
+                 ->rawColumns(['actions','foto','estado']) // incorporar columnas
                  ->make(true); // convertir a codigo
         }
     }
@@ -106,21 +113,25 @@ class EmpleadoController extends Controller
 
     public function buscarPorEmpleado($id){
         $empleado=Empleado::all()->where('id','=',$id)->first();
-       /* $res['datos']=$empleado;
-        $res['roles']=$roles;
-        $res['usuarios']=$usuarios;*/
-        return json_encode($empleado); 
+        $imagen='imagenes/empleados/'.$empleado->id.'.jpg'; 
+        if (!file_exists($imagen)) { // existe la imagen con el nombre del id empleado
+            $imagen = "imagenes/empleados/150x150.png";
+        }
+        $url_foto=asset($imagen.'?'.time());
+        $data=['empleado'=>$empleado,'url_foto'=>$url_foto];
+        return json_encode($data); 
     }
 
     public function update(Request $request, $id){
+        $data['error']=0;
         $validator = Validator::make($request->all(), [
-            'nombreM' => 'required|string|max:255',
-            'sueldoM' => 'required|integer',
-            'telefonoM' => 'required|integer',
-            'nro_carnetM' => 'required|integer',
-            'apellidosM' => 'required|string|max:255',
-            'direccionM' => 'required|string|max:255',
-            //'img_perfil' => 'image|mimes:jpg,jpeg'
+            'nombre_modal_empleado' => 'required|string|max:255',
+            'sueldo_modal_empleado' => 'required|integer',
+            'telefono_modal_empleado' => 'required|integer',
+            'nro_carnet_modal_empleado' => 'required|integer',
+            'apellidos_modal_empleado' => 'required|string|max:255',
+            'direccion_modal_empleado' => 'required|string|max:255',
+            //'img_foto_modal_empleado' => 'image|mimes:jpg,jpeg'
         ]);
 
         if($validator->fails())
@@ -130,14 +141,22 @@ class EmpleadoController extends Controller
         }
 
         $empleado=Empleado::all()->where('id','=',$id)->first();
-        $empleado->nombre=$request->nombreM;
-        $empleado->apellidos=$request->apellidosM;
-        $empleado->direccion=$request->direccionM;
-        $empleado->sueldo=$request->sueldoM;
-        $empleado->nro_carnet=$request->nro_carnetM;
+        $empleado->nombre=$request->nombre_modal_empleado;
+        $empleado->apellidos=$request->apellidos_modal_empleado;
+        $empleado->direccion=$request->direccion_modal_empleado;
+        $empleado->telefono=$request->telefono_modal_empleado;
+        $empleado->sueldo=$request->sueldo_modal_empleado;
+        $empleado->nro_carnet=$request->nro_carnet_modal_empleado;
         $empleado->update();
+        if ($request->hasFile("img_foto_modal_empleado")) {//existe un campo de tipo file?
+            $imagen = $request->file("img_foto_modal_empleado"); //almacenar imagen en variable
+            $nombreimagen=Str::slug($empleado->id).".".$imagen->guessExtension();//insertar parametro del nombre de imagen
+            $ruta = public_path("imagenes/empleados/");//guardar en esa ruta
+            $imagen->move($ruta,$nombreimagen); //mover la imagen es esa ruta y con ese nombre      
+        }
 
-        return $request;
+
+        return $data;
     }
 
     public function store(Request $request){

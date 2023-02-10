@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caja;
+use App\Models\Egreso;
 use Illuminate\Http\Request;
 use App\Models\Gestion;
+use App\Models\Ingreso;
 use App\Models\Socio;
 use App\Models\Tipo;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Session;
 
 class GestionController extends Controller
 {
@@ -114,6 +117,7 @@ class GestionController extends Controller
 
     public function store(Request $request)
     {
+        $data['error']=0;
         $validator = Validator::make($request->all(), [
             'gestion' => 'required|string|max:255',
             'descripcion' => 'required|string|max:200',
@@ -132,8 +136,8 @@ class GestionController extends Controller
         $r->save();
         // creamos su caja de gestion  tipo gestion
         $caja= new Caja();
-        $caja->nombre='Caja agro '.$r->nombre;
-        $caja->descripcion='sin descripcion';
+        $caja->nombre='Caja agro '.$r->nombre.' '.Auth::user()->name;
+        $caja->descripcion='sin descripcion colocar Por Favor';
         $caja->monto_total=0;
         $caja->tipo_caja=-1;
         $caja->id_gestion=$r->id;
@@ -145,7 +149,7 @@ class GestionController extends Controller
         $socio->cargo=1;
         $socio->save();
 
-        return $request; 
+        return $data; 
     }
 
     public function buscarPorGestion($id){
@@ -156,18 +160,29 @@ class GestionController extends Controller
 
     public function update(Request $request,$id)
     {
+        $data['error']=0;
+        $validator = Validator::make($request->all(), [
+            'gestion_modal_gestion' => 'required|string|max:255',
+            'descripcion_modal_gestion' => 'required|string|max:200',
+        ]);
+
+        if($validator->fails())
+        {
+            $data=['error'=>'1','mensaje'=>$validator->errors()->all()];  // all() 
+            return $data;
+        }
         $gestion=Gestion::findOrFail($id);
-        $gestion->nombre=$request->gestionM;
-        $gestion->descripcion=$request->descripcionM;
-        $gestion->estado=$request->estadoM;
+        $gestion->nombre=$request->gestion_modal_gestion;
+        $gestion->descripcion=$request->descripcion_modal_gestion;
+        /*$gestion->estado=$request->estadoM;
         if ($request->estadoM==1) {
             $gestion->fecha_final=date('Y-m-d');
             $caja=Caja::all()->where('id_gestion','=',$gestion->id)->first();
             $caja->activo=0;
             $caja->update();
-        }
+        }*/
         $gestion->update();
-        return $request;
+        return $data;
     }
 
     public function destroy($id)
@@ -221,9 +236,51 @@ class GestionController extends Controller
         echo json_encode($res);
     }
 
-    public function edit(Gestion $gestion)
+    public function extra()
     {
-        //
+       $gestion=Gestion::select('gestions.*')
+       ->whereIn('gestions.activo',[1,-1])
+       ->where('id_usuario','=',Auth::user()->id)
+       ->orderBy('gestions.created_at','desc')
+       ->get();
+       $data=['gestion'=>$gestion];
+       echo json_encode($data);  
+    }
+
+    public function gestion_global_update($id_gestion)
+    {
+      // session()->forget('gestion_id');
+       session(['gestion_id'=>$id_gestion]);
+       //session(['gestion_id'=>$id_gestion]);
+       return json_encode(1);  
+    }
+
+    public function gestion_global_caja(){
+        $data=['error'=>1 ,'monto_global'=>"--",'egreso_global'=>"--",'ingreso_global'=>"--"];
+        if( (session()->has('gestion_id')) & (session('gestion_id')!=-1)){
+            $caja=Caja::all()->where('id_gestion','=',session('gestion_id'))->first();
+            $suma_ingreso=Ingreso::select(
+                'ingresos.monto'
+            )
+            ->where('ingresos.id_caja','=',$caja->id)
+            ->sum('ingresos.monto');
+            $suma_egreso=Egreso::select(
+                'egresos.monto'
+            )
+            ->where('egresos.id_caja','=',$caja->id)
+            ->sum('egresos.monto');
+
+            session(['monto_caja_global'=>$caja->monto_total]);
+            session(['monto_ingreso_global'=>$suma_ingreso]);
+            session(['monto_egreso_global'=>$suma_egreso]);
+            $data=['error'=>0 ,'monto_global'=>$caja->monto_total,'egreso_global'=>$suma_egreso,'ingreso_global'=>$suma_ingreso];
+            return json_encode($data); 
+        }
+        return json_encode($data); 
+       // $res['monto']=$caja->monto_total;
+       // $res['monto_ingreso']=$suma_ingreso;
+       // $res['monto_egreso']=$suma_egreso;
+       // echo json_encode($res);
     }
 
 

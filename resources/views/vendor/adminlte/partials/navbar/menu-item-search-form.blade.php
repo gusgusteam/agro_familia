@@ -1,9 +1,17 @@
+
 <li class="nav-item">
 
-    {{-- Search toggle button --}}
+    {{-- Search toggle button 
     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
         <i class="fas fa-search"></i>
-    </a>
+    </a>--}}
+    <div class="input-group-append">
+        {{--<input class="form-control form-control-navbar" type="text" value="gestion 2">--}}
+        <select name="gestion_global" id="gestion_global"  class="form-control form-control-navbar">
+            <option value="1">prueba</option>
+        </select>
+    </div>
+    
 
     {{-- Search bar --}}
     <div class="navbar-search-block">
@@ -18,7 +26,6 @@
                     name="{{ $item['input_name'] }}"
                     placeholder="{{ $item['text'] }}"
                     aria-label="{{ $item['text'] }}">
-
                 {{-- Search buttons --}}
                 <div class="input-group-append">
                     <button class="btn btn-navbar" type="submit">
